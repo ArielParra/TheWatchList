@@ -28,7 +28,7 @@ import {
   colors
 } from './styled/CommonStyles';
 import { Movie, TMDBMovie, WatchProvidersResponse } from '../types';
-import { getImageUrl, isProviderAllowed, getProviderUrl } from '../services/tmdbApi';
+import { getImageUrl, isProviderAllowed, getProviderUrl, getTranslatedGenre } from '../services/tmdbApi';
 import { ActivityIndicator } from 'react-native';
 
 interface MovieDetailModalProps {
@@ -168,7 +168,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                   </MovieDetailTitle>
                   <MovieDetailYear>{selectedMovie.year}</MovieDetailYear>
                   <MovieDetailRating>⭐ {selectedMovie.rating.toFixed(1)}</MovieDetailRating>
-                  <MovieDetailGenre>{selectedMovie.genre}</MovieDetailGenre>
+                  <MovieDetailGenre>{getTranslatedGenre(selectedMovie.genre, t)}</MovieDetailGenre>
                   
                   {/* Indicador de estado (solo visual) */}
                   <View style={{ 

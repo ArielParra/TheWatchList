@@ -136,7 +136,45 @@ export const getWatchProviders = async (movieId: number, language: string = 'en'
   }
 };
 
-export const getGenreName = (genreId: number): string => {
+export const getGenreName = (genreId: number, t?: (key: string) => string): string => {
   const genre = genres.find(g => g.id === genreId);
-  return genre ? genre.name : 'Unknown';
+  if (!genre) {
+    return t ? t('genres.Unknown') : 'Unknown';
+  }
+  
+  // Si se proporciona la función de traducción, usar las traducciones
+  if (t) {
+    return t(`genres.${genre.name}`);
+  }
+  
+  // Fallback al nombre original en inglés
+  return genre.name;
+};
+
+// ✅ Función helper para obtener género traducido
+export const getTranslatedGenre = (genreString: string, t: (key: string) => string): string => {
+  if (!genreString) return '';
+  
+  // Si contiene múltiples géneros separados por comas
+  if (genreString.includes(', ')) {
+    return genreString
+      .split(', ')
+      .map(genre => {
+        const trimmedGenre = genre.trim();
+        // Verificar si la clave de traducción existe, si no, usar el original
+        try {
+          return t(`genres.${trimmedGenre}`);
+        } catch {
+          return trimmedGenre;
+        }
+      })
+      .join(', ');
+  }
+  
+  // Género individual
+  try {
+    return t(`genres.${genreString}`);
+  } catch {
+    return genreString;
+  }
 };

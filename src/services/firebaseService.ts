@@ -52,7 +52,7 @@ export const addMovieToFirestore = async (tmdbMovie: TMDBMovie): Promise<string>
             const genre = genres.find(g => g.id === id);
             return genre ? genre.name : 'Unknown';
           }).join(', ') 
-        : 'Sin género',
+        : 'noGenre',
       rating: tmdbMovie.vote_average || 0,
       poster: tmdbMovie.poster_path || '',
       watched: false,

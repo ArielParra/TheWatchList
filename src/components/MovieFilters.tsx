@@ -70,7 +70,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
     if (filters.watched !== null) activeFilters.push(filters.watched ? 'Vistas' : 'Pendientes');
     if (filters.rating > 1) activeFilters.push(`≥${filters.rating}⭐`);
     if (filters.year) activeFilters.push(`${filters.year}`);
-    if (filters.genre) activeFilters.push(filters.genre);
+    if (filters.genre) activeFilters.push(t(`genres.${filters.genre}`));
     return activeFilters.length > 0 ? activeFilters.join(' • ') : 'Sin filtros';
   };
 
@@ -370,7 +370,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
                 color: filters.genre === genre.name ? colors.surface : colors.text,
                 fontSize: 9
               }}>
-                {genre.name}
+                {t(`genres.${genre.name}`)}
               </ButtonText>
             </SecondaryButton>
           ))}

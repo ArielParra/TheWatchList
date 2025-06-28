@@ -77,5 +77,28 @@
   },
   "footer": {
     "madeWith": "hecho con ❤️ por Ariel para su ❤️ Anahi"
+  },
+  "genres": {
+    "Action": "Acción",
+    "Adventure": "Aventura",
+    "Animation": "Animación",
+    "Comedy": "Comedia",
+    "Crime": "Crimen",
+    "Documentary": "Documental",
+    "Drama": "Drama",
+    "Family": "Familiar",
+    "Fantasy": "Fantasía",
+    "History": "Historia",
+    "Horror": "Terror",
+    "Music": "Musical",
+    "Mystery": "Misterio",
+    "Romance": "Romance",
+    "Science Fiction": "Ciencia Ficción",
+    "TV Movie": "Película de TV",
+    "Thriller": "Thriller",
+    "War": "Guerra",
+    "Western": "Western",
+    "Unknown": "Desconocido",
+    "noGenre": "Sin Género"
   }
 }
