@@ -46,10 +46,6 @@ export const TopBar = styled.View`
   padding: ${isMobile ? '12px 16px' : '16px 24px'};
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 3px;
   elevation: 3;
   padding-top: ${isMobile ? '16px' : '16px'};
 `;
@@ -120,10 +116,6 @@ export const PrimaryButton = styled.TouchableOpacity`
   padding: ${isMobile ? '10px 16px' : '12px 20px'};
   border-radius: 10px;
   align-items: center;
-  shadow-color: ${colors.primary};
-  shadow-offset: 0px 4px;
-  shadow-opacity: 0.2;
-  shadow-radius: 8px;
   elevation: 4;
 `;
 
@@ -165,10 +157,6 @@ export const MovieCard = styled.TouchableOpacity<{ showImage: boolean }>`
   width: ${(props: { showImage: boolean }) => props.showImage ? '150px' : '100%'};
   align-items: center;
   border: 1px solid ${colors.border};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
   elevation: 2;
 `;
 
@@ -213,10 +201,6 @@ export const MinimalMovieItem = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   border: 1px solid ${colors.border};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 1px;
-  shadow-opacity: 0.05;
-  shadow-radius: 2px;
   elevation: 1;
   min-height: 50px;
 `;  
@@ -257,10 +241,6 @@ export const MovieListItem = styled.TouchableOpacity`
   align-items: center;
   justify-content: space-between;
   border: 1px solid ${colors.border};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
   elevation: 2;
 `;
 
@@ -325,10 +305,6 @@ export const FilterContainer = styled.View`
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
   max-height: ${isMobile ? '70vh' : 'auto'};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
   elevation: 2;
 `;
 
@@ -374,10 +350,6 @@ export const ModalContent = styled.View`
   width: ${isMobile ? '90%' : '85%'};
   max-width: ${isMobile ? '400px' : '600px'};
   max-height: ${isMobile ? '80vh' : '75vh'};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 8px;
-  shadow-opacity: 0.3;
-  shadow-radius: 16px;
   elevation: 8;
   margin: ${isMobile ? '20px' : '40px'};
 `;
@@ -398,10 +370,6 @@ export const MovieDetailContent = styled.View`
   max-height: ${isMobile ? '85%' : '80%'};
   width: ${isMobile ? '100%' : '90%'};
   max-width: ${isMobile ? '100%' : '600px'};
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 10px;
-  shadow-opacity: 0.3;
-  shadow-radius: 20px;
   elevation: 10;
 `;
 
@@ -566,10 +534,6 @@ export const RandomButton = styled.TouchableOpacity`
   justify-content: center;
   flex-direction: row;
   min-width: ${isMobile ? '100px' : '120px'};
-  shadow-color: ${colors.accent};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.2;
-  shadow-radius: 4px;
   elevation: 2;
 `;
 

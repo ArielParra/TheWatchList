@@ -139,10 +139,6 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
               height: 40,
               justifyContent: 'center',
               alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
               elevation: 5,
             }}
             activeOpacity={0.7}
