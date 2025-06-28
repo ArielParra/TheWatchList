@@ -44,6 +44,7 @@ export interface WatchProvider {
 export interface WatchProvidersResponse {
   results: {
     [countryCode: string]: {
+      ads: any;
       link?: string;
       flatrate?: WatchProvider[];
       buy?: WatchProvider[];

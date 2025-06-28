@@ -57,22 +57,26 @@ export const getProviderUrl = (providerName: string, movieTitle: string): string
   
   switch (providerName.toLowerCase()) {
     case 'netflix':
+    case 'netflix standard with ads':
       return `https://www.netflix.com/search?q=${query}`;
     case 'amazon prime video':
     case 'amazon prime video with ads':
+    case 'paramount amazon channel':
     case 'prime video':
+    case 'Max Amazon Channel':
       return `https://www.primevideo.com/search/ref=atv_nb_sr?phrase=${query}`;
     case 'disney plus':
     case 'disney+':
-      return `https://www.disneyplus.com/search?q=${query}`;
+      return `https://www.disneyplus.com/es-419/browse/search?q=${query}`;
     case 'max':
     case 'hbo max':
-      return `https://www.max.com/search?q=${query}`;
+      return `https://play.max.com/search/result?q=${query}`;
     case 'paramount plus':
+    case 'paramount plus premium':
     case 'paramount+':
       return `https://www.paramountplus.com/search/?query=${query}`;
     case 'claro video':
-      return `https://www.clarovideo.com/mexico/buscar?q=${query}`;
+      return `https://www.clarovideo.com/mexico/search?q=${query}`;
     case 'vix ':
     case 'vix gratis':
     case 'vix':

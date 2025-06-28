@@ -218,7 +218,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
               }}>
                 {/* ✅ Proveedores de streaming filtrados */}
                 {watchProviders?.results?.[watchProvidersCountry] && (
-                  <View style={{ flex: 1, minWidth: 250 }}>
+                  <View style={{ flex: 3, minWidth: 250 }}>
                     <WatchProvidersContainer>
                       <WatchProvidersTitle>
                         📺 {t('movieDetails.whereToWatch')}
@@ -228,8 +228,9 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                         const countryProviders = watchProviders.results[watchProvidersCountry];
                         
                         // Obtener proveedores filtrados de todas las categorías
-                        const flatrateFiltered = countryProviders.flatrate ? getFilteredProviders(countryProviders.flatrate) : [];
-                        
+                        const flatrateBase = countryProviders.flatrate ? getFilteredProviders(countryProviders.flatrate) : [];
+                        const adsFiltered = countryProviders.ads ? getFilteredProviders(countryProviders.ads) : [];
+                        const flatrateFiltered = [...flatrateBase, ...adsFiltered];
                         const hasAnyProviders = flatrateFiltered.length > 0;
                         
                         if (!hasAnyProviders) {
@@ -275,6 +276,8 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                                 </WatchProvidersList>
                               </>
                             )}
+                            {/* ads */}
+
                             
                           </>
                         );
@@ -284,7 +287,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                 )}
 
                 {/* Enlaces externos para buscar la película */}
-                <View style={{ flex: 1, minWidth: 250 }}>
+                <View style={{ flex: 1, minWidth: 200 }}>
                   <ExternalLinksContainer>
                     <ExternalLinksTitle>
                       🔍 {t('movieDetails.searchOnline')}
