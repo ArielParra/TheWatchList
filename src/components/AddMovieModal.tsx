@@ -82,10 +82,10 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
               {item.title}
             </MovieTitle>
             <MovieDetails style={{ fontSize: 10 }}>
-              {new Date(item.release_date).getFullYear()}
+              {item.release_date ? new Date(item.release_date).getFullYear() : 'N/A'}
             </MovieDetails>
             <MovieDetails style={{ fontSize: 10 }}>
-              ⭐ {item.vote_average.toFixed(1)}
+              ⭐ {item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}
             </MovieDetails>
           </View>
           

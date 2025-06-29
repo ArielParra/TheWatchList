@@ -26,12 +26,12 @@ export interface MovieFilters {
 export interface TMDBMovie {
   id: number;
   title: string;
-  release_date: string;
+  release_date?: string;
   genre_ids: number[];
   genres?: { id: number; name: string }[];
-  vote_average: number;
-  poster_path: string;
-  overview: string;
+  vote_average?: number;
+  poster_path?: string;
+  overview?: string;
 }
 
 export interface WatchProvider {

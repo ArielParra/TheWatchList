@@ -19,8 +19,8 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
 
     try {
       setSearchLoading(true);
-      // Usar 'en' para mantener géneros en inglés, serán traducidos por i18n
-      const results = await searchMovies(queryToUse, 'en');
+      // Usar el idioma actual para buscar títulos, pero los géneros siempre se guardan en inglés
+      const results = await searchMovies(queryToUse, i18n.language);
       setSearchResults(results.results);
       
       // Si se pasó un query personalizado, actualizar el estado
@@ -65,12 +65,12 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
         id: movieId,
         tmdbId: tmdbMovie.id,
         title: tmdbMovie.title,
-        year: new Date(tmdbMovie.release_date).getFullYear(),
+        year: tmdbMovie.release_date ? new Date(tmdbMovie.release_date).getFullYear() : new Date().getFullYear(),
         genre: tmdbMovie.genre_ids?.length > 0 
           ? tmdbMovie.genre_ids.map(id => getGenreName(id)).join(', ')
           : 'Unknown',
-        rating: tmdbMovie.vote_average,
-        poster: tmdbMovie.poster_path,
+        rating: tmdbMovie.vote_average || 0,
+        poster: tmdbMovie.poster_path || '',
         watched: false,
         orderNumber: Date.now() // Usar timestamp como orderNumber temporal
       };
