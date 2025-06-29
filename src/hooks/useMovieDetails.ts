@@ -19,11 +19,11 @@ export const useMovieDetails = () => {
       setShowDetailModal(true);
       setDetailLoading(true);
 
-      // Obtener detalles completos de TMDB
-      const details = await getMovieDetails(movie.tmdbId, i18n.language);
+      // Obtener detalles completos de TMDB - usar 'en' para consistencia de géneros
+      const details = await getMovieDetails(movie.tmdbId, 'en');
       setMovieDetails(details);
 
-      // Obtener proveedores de streaming
+      // Obtener proveedores de streaming - usar idioma actual para localización
       const providers = await getWatchProviders(movie.tmdbId, i18n.language);
       setWatchProviders(providers);
 

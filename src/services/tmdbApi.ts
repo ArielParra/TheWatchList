@@ -107,12 +107,12 @@ const getTMDBLanguage = (language: string): string => {
 export const searchMovies = async (query: string, language: string = 'en'): Promise<TMDBSearchResponse> => {
   const tmdbLanguage = getTMDBLanguage(language);
   const response = await fetch(
-    `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=${tmdbLanguage}`
+    `${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=${tmdbLanguage}&region=MX`
   );
   return response.json();
 };
 
-export const getMovieDetails = async (movieId: number, language: string = 'es'): Promise<TMDBMovie> => {
+export const getMovieDetails = async (movieId: number, language: string = 'en'): Promise<TMDBMovie> => {
   const tmdbLanguage = getTMDBLanguage(language);
   const response = await fetch(
     `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=${tmdbLanguage}&region=MX`
@@ -136,28 +136,21 @@ export const getWatchProviders = async (movieId: number, language: string = 'en'
   }
 };
 
-export const getGenreName = (genreId: number, t?: (key: string) => string): string => {
+export const getGenreName = (genreId: number): string => {
   const genre = genres.find(g => g.id === genreId);
-  if (!genre) {
-    return t ? t('genres.Unknown') : 'Unknown';
-  }
-  
-  // Si se proporciona la función de traducción, usar las traducciones
-  if (t) {
-    return t(`genres.${genre.name}`);
-  }
-  
-  // Fallback al nombre original en inglés
-  return genre.name;
+  return genre ? genre.name : 'Unknown';
 };
 
 // ✅ Función helper para obtener género traducido
 export const getTranslatedGenre = (genreString: string, t: (key: string) => string): string => {
   if (!genreString) return '';
   
+  // Primero corregir el formato si está mal
+  const fixedGenre = fixGenreFormat(genreString);
+  
   // Si contiene múltiples géneros separados por comas
-  if (genreString.includes(', ')) {
-    return genreString
+  if (fixedGenre.includes(', ')) {
+    return fixedGenre
       .split(', ')
       .map(genre => {
         const trimmedGenre = genre.trim();
@@ -173,8 +166,49 @@ export const getTranslatedGenre = (genreString: string, t: (key: string) => stri
   
   // Género individual
   try {
-    return t(`genres.${genreString}`);
+    return t(`genres.${fixedGenre}`);
   } catch {
+    return fixedGenre;
+  }
+};
+
+// ✅ Función para arreglar géneros mal formateados (números en lugar de nombres)
+export const fixGenreFormat = (genreString: string): string => {
+  if (!genreString || genreString === 'noGenre') return 'Unknown';
+  
+  // Si ya son nombres válidos en inglés, devolverlos tal como están
+  if (!genreString.match(/^\d+/) && !genreString.includes('genres.')) {
     return genreString;
   }
+  
+  // Si contiene "genres." significa que hay problemas de traducción
+  if (genreString.includes('genres.')) {
+    return genreString
+      .split(', ')
+      .map(genre => {
+        // Extraer el número del formato "genres.18" o usar directamente si es número
+        const match = genre.match(/(\d+)/);
+        if (match) {
+          const genreId = parseInt(match[1]);
+          const genreObj = genres.find(g => g.id === genreId);
+          return genreObj ? genreObj.name : 'Unknown';
+        }
+        return genre;
+      })
+      .join(', ');
+  }
+  
+  // Si son números separados por comas
+  if (genreString.match(/^\d+/)) {
+    return genreString
+      .split(', ')
+      .map(idStr => {
+        const genreId = parseInt(idStr.trim());
+        const genreObj = genres.find(g => g.id === genreId);
+        return genreObj ? genreObj.name : 'Unknown';
+      })
+      .join(', ');
+  }
+  
+  return genreString;
 };

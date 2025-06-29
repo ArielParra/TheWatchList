@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { TMDBMovie, Movie } from '../types';
-import { searchMovies } from '../services/tmdbApi';
+import { searchMovies, getGenreName } from '../services/tmdbApi';
 import { addMovieToFirestore, getMoviesFromFirestore } from '../services/firebaseService';
 
 export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
@@ -19,7 +19,8 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
 
     try {
       setSearchLoading(true);
-      const results = await searchMovies(queryToUse, i18n.language);
+      // Usar 'en' para mantener géneros en inglés, serán traducidos por i18n
+      const results = await searchMovies(queryToUse, 'en');
       setSearchResults(results.results);
       
       // Si se pasó un query personalizado, actualizar el estado
@@ -66,7 +67,7 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
         title: tmdbMovie.title,
         year: new Date(tmdbMovie.release_date).getFullYear(),
         genre: tmdbMovie.genre_ids?.length > 0 
-          ? tmdbMovie.genre_ids.map(id => id.toString()).join(', ')
+          ? tmdbMovie.genre_ids.map(id => getGenreName(id)).join(', ')
           : 'Unknown',
         rating: tmdbMovie.vote_average,
         poster: tmdbMovie.poster_path,
