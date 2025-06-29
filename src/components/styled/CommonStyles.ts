@@ -345,6 +345,13 @@ export const ModalContainer = styled.View`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   padding: ${isMobile ? '16px' : '20px'};
+  /* Fixes para Android */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
 `;
 
 export const ModalContent = styled.View`
@@ -365,6 +372,13 @@ export const MovieDetailModal = styled.View`
   justify-content: center;
   align-items: center;
   padding: ${isMobile ? '20px' : '40px'};
+  /* Fixes para Android */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
 `;
 
 export const MovieDetailContent = styled.View`

@@ -17,6 +17,7 @@ import {
   MovieDetails,
   colors
 } from './styled/CommonStyles';
+import { ModalOverlay } from './ModalOverlay';
 import { TMDBMovie } from '../types';
 import { getImageUrl } from '../services/tmdbApi';
 
@@ -112,8 +113,9 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
       animationType="slide"
       transparent={true}
       onRequestClose={onClose}
+      statusBarTranslucent={true}
     >
-      <ModalContainer>
+      <ModalOverlay style={{ padding: 16 }}>
         <ModalContent style={{ maxHeight: '90%' }}>
           <TopBarRow>
             <TopBarTitle>{t('buttons.searchMovies')}</TopBarTitle>
@@ -199,7 +201,7 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
             />
           )}
         </ModalContent>
-      </ModalContainer>
+      </ModalOverlay>
     </Modal>
   );
 };

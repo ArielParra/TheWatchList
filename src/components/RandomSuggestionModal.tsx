@@ -15,6 +15,7 @@ import {
   MovieDetails,
   colors
 } from './styled/CommonStyles';
+import { ModalOverlay } from './ModalOverlay';
 import { Movie } from '../types';
 import { getImageUrl } from '../services/tmdbApi';
 
@@ -40,8 +41,14 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
   // ✅ Modal de error cuando no hay películas sin ver disponibles
   if (showNoMoviesError || (!suggestedMovie && visible)) {
     return (
-      <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-        <ModalContainer>
+      <Modal 
+        visible={visible} 
+        transparent 
+        animationType="fade" 
+        onRequestClose={onClose}
+        statusBarTranslucent={true}
+      >
+        <ModalOverlay style={{ padding: 16 }}>
           <ModalContent>
             <CloseButton onPress={onClose}>
               <Ionicons name="close" size={20} color={colors.text} />
@@ -63,7 +70,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
               <ButtonText onPress={onClose}>OK</ButtonText>
             </PrimaryButton>
           </ModalContent>
-        </ModalContainer>
+        </ModalOverlay>
       </Modal>
     );
   }
@@ -74,8 +81,14 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
   }
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <ModalContainer>
+    <Modal 
+      visible={visible} 
+      transparent 
+      animationType="fade" 
+      onRequestClose={onClose}
+      statusBarTranslucent={true}
+    >
+      <ModalOverlay style={{ padding: 16 }}>
         <ModalContent>
           <CloseButton onPress={onClose}>
             <Ionicons name="close" size={20} color={colors.text} />
@@ -143,7 +156,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
             </View>
           </View>
         </ModalContent>
-      </ModalContainer>
+      </ModalOverlay>
     </Modal>
   );
 };

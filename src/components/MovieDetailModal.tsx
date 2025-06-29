@@ -28,6 +28,7 @@ import {
   EmptyText,
   colors
 } from './styled/CommonStyles';
+import { ModalOverlay } from './ModalOverlay';
 import { Movie, TMDBMovie, WatchProvidersResponse } from '../types';
 import { getImageUrl, isProviderAllowed, getProviderUrl, getTranslatedGenre } from '../services/tmdbApi';
 import { ActivityIndicator } from 'react-native';
@@ -125,8 +126,9 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
       animationType="fade"
       transparent={true}
       onRequestClose={onClose}
+      statusBarTranslucent={true}
     >
-      <MovieDetailModalContainer>
+      <ModalOverlay style={{ padding: isMobile ? 20 : 40 }}>
         <MovieDetailContent>
       <TouchableOpacity 
             onPress={onClose}
@@ -423,7 +425,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
             </ScrollView>
           )}
         </MovieDetailContent>
-      </MovieDetailModalContainer>
+      </ModalOverlay>
     </Modal>
   );
 };
