@@ -82,7 +82,7 @@ export const getProviderUrl = (providerName: string, movieTitle: string): string
     case 'vix':
       return `https://www.vix.com/es-mx/search?q=${query}`;
     case 'mercado play':
-      return `https://play.mercadolibre.com.mx/search?q=${query}`;
+      return `https://play.mercadolibre.com.mx/buscar/${query}`;
     case 'pluto tv':
       return `https://pluto.tv/es/search?term=${query}`;
     default:

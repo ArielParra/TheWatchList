@@ -95,6 +95,10 @@ export const TopBar: React.FC<TopBarProps> = ({
           placeholderTextColor={colors.textSecondary}
           value={searchQuery}
           onChangeText={onSearchChange}
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="search"
+          clearButtonMode="while-editing"
         />
       </SearchContainer>
     </ResponsiveTopBar>

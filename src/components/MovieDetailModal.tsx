@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, ScrollView, Linking, Alert, TouchableOpacity, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
+import { useResponsive } from '../hooks/useResponsive';
 import {
   MovieDetailModal as MovieDetailModalContainer,
   MovieDetailContent,
@@ -51,6 +52,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
   onToggleWatch
 }) => {
   const { t } = useTranslation();
+  const { isMobile } = useResponsive();
 
   const watchProvidersCountry = process.env.EXPO_PUBLIC_WATCH_PROVIDERS_COUNTRY || 'US';
 
@@ -153,72 +155,138 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
             </CenterContainer>
           ) : (
             <ScrollView showsVerticalScrollIndicator={false}>
-              {/* Header con poster y info básica */}
-              <MovieDetailHeader>
+              {/* Header con poster y info básica - Responsive */}
+              <View style={{
+                flexDirection: isMobile ? 'column' : 'row',
+                marginBottom: 20,
+                alignItems: isMobile ? 'stretch' : 'flex-start',
+                gap: isMobile ? 16 : 20,
+              }}>
                 {selectedMovie.poster && (
-                  <MovieDetailPoster 
-                    source={{ uri: getImageUrl(selectedMovie.poster) }}
-                    defaultSource={require('../../assets/icon.png')}
-                  />
+                  <View style={{
+                    alignItems: isMobile ? 'center' : 'flex-start',
+                    marginBottom: isMobile ? 12 : 0,
+                  }}>
+                    <MovieDetailPoster 
+                      source={{ uri: getImageUrl(selectedMovie.poster) }}
+                      defaultSource={require('../../assets/icon.png')}
+                      style={{
+                        width: isMobile ? 120 : 140,
+                        height: isMobile ? 180 : 210,
+                        borderRadius: 12,
+                      }}
+                    />
+                  </View>
                 )}
                 
-                <MovieDetailInfo>
-                  <MovieDetailTitle numberOfLines={3}>
+                <View style={{
+                  flex: 1,
+                  alignItems: isMobile ? 'center' : 'flex-start',
+                  paddingHorizontal: isMobile ? 8 : 0,
+                }}>
+                  <Text style={{
+                    fontSize: isMobile ? 20 : 24,
+                    fontWeight: '700',
+                    color: colors.text,
+                    marginBottom: 8,
+                    textAlign: isMobile ? 'center' : 'left',
+                    lineHeight: isMobile ? 24 : 28,
+                  }} numberOfLines={3}>
                     {selectedMovie.title}
-                  </MovieDetailTitle>
-                  <MovieDetailYear>{selectedMovie.year}</MovieDetailYear>
-                  <MovieDetailRating>⭐ {selectedMovie.rating.toFixed(1)}</MovieDetailRating>
-                  <MovieDetailGenre>{getTranslatedGenre(selectedMovie.genre, t)}</MovieDetailGenre>
+                  </Text>
                   
-                  {/* Indicador de estado (solo visual) */}
+                  <Text style={{
+                    fontSize: isMobile ? 16 : 18,
+                    color: colors.textSecondary,
+                    marginBottom: 6,
+                    textAlign: isMobile ? 'center' : 'left',
+                  }}>
+                    {selectedMovie.year}
+                  </Text>
+                  
+                  <Text style={{
+                    fontSize: isMobile ? 16 : 18,
+                    color: colors.primary,
+                    fontWeight: '600',
+                    marginBottom: 8,
+                    textAlign: isMobile ? 'center' : 'left',
+                  }}>
+                    ⭐ {selectedMovie.rating.toFixed(1)}
+                  </Text>
+                  
+                  <Text style={{
+                    fontSize: isMobile ? 14 : 16,
+                    color: colors.textSecondary,
+                    marginBottom: 16,
+                    textAlign: isMobile ? 'center' : 'left',
+                  }}>
+                    {getTranslatedGenre(selectedMovie.genre, t)}
+                  </Text>
+                  
+                  {/* Indicador de estado */}
                   <View style={{ 
                     flexDirection: 'row', 
                     alignItems: 'center', 
-                    marginTop: 12,
                     backgroundColor: selectedMovie.watched ? colors.success : colors.warning,
-                    paddingHorizontal: 12,
-                    paddingVertical: 6,
-                    borderRadius: 16,
-                    alignSelf: 'flex-start'
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
+                    borderRadius: 20,
+                    alignSelf: isMobile ? 'center' : 'flex-start'
                   }}>
                     <Ionicons 
                       name={selectedMovie.watched ? "checkmark-circle" : "time"} 
-                      size={16} 
+                      size={18} 
                       color={colors.surface} 
                     />
                     <Text style={{
                       color: colors.surface,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: '600',
-                      marginLeft: 6
+                      marginLeft: 8
                     }}>
                       {selectedMovie.watched ? t('movie.watched') : t('movie.pending')}
                     </Text>
                   </View>
-                </MovieDetailInfo>
-              </MovieDetailHeader>
+                </View>
+              </View>
 
               {/* Sinopsis */}
               {movieDetails?.overview && (
-                <MovieDetailOverview>
-                  {movieDetails.overview}
-                </MovieDetailOverview>
+                <View style={{
+                  marginBottom: 20,
+                  paddingHorizontal: isMobile ? 8 : 0,
+                }}>
+                  <Text style={{
+                    fontSize: isMobile ? 14 : 15,
+                    color: colors.text,
+                    lineHeight: isMobile ? 20 : 22,
+                    textAlign: 'justify',
+                  }}>
+                    {movieDetails.overview}
+                  </Text>
+                </View>
               )}
 
-              {/* Contenedor horizontal para proveedores y enlaces */}
+              {/* Contenedor responsive para proveedores y enlaces */}
               <View style={{ 
-                flexDirection: 'row', 
-                gap: 16, 
-                marginBottom: 16,
-                flexWrap: 'wrap' 
+                flexDirection: isMobile ? 'column' : 'row', 
+                gap: isMobile ? 16 : 20, 
+                marginBottom: 20,
+                paddingHorizontal: isMobile ? 8 : 0,
               }}>
                 {/* ✅ Proveedores de streaming filtrados */}
                 {watchProviders?.results?.[watchProvidersCountry] && (
-                  <View style={{ flex: 3, minWidth: 250 }}>
-                    <WatchProvidersContainer>
-                      <WatchProvidersTitle>
+                  <View style={{ flex: isMobile ? undefined : 3, minWidth: isMobile ? undefined : 250 }}>
+                    <View style={{ marginBottom: 16 }}>
+                      <Text style={{
+                        fontSize: 16,
+                        fontWeight: '600',
+                        color: colors.text,
+                        marginBottom: 12,
+                        textAlign: isMobile ? 'center' : 'left',
+                      }}>
                         📺 {t('movieDetails.whereToWatch')}
-                      </WatchProvidersTitle>
+                      </Text>
                       
                       {(() => {
                         const countryProviders = watchProviders.results[watchProvidersCountry];
@@ -278,40 +346,78 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                           </>
                         );
                       })()}
-                    </WatchProvidersContainer>
+                    </View>
                   </View>
                 )}
 
                 {/* Enlaces externos para buscar la película */}
-                <View style={{ flex: 1, minWidth: 200 }}>
-                  <ExternalLinksContainer>
-                    <ExternalLinksTitle>
+                <View style={{ flex: isMobile ? undefined : 1, minWidth: isMobile ? undefined : 200 }}>
+                  <View style={{ marginBottom: 16 }}>
+                    <Text style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: colors.text,
+                      marginBottom: 12,
+                      textAlign: isMobile ? 'center' : 'left',
+                    }}>
                       🔍 {t('movieDetails.searchOnline')}
-                    </ExternalLinksTitle>
+                    </Text>
                     
-                    <ExternalLinkButton 
+                    <TouchableOpacity 
                       onPress={() => searchMovieOnline(
                         selectedMovie.title, 
                         movieDetails?.release_date || `${selectedMovie.year}-01-01`, 
                         'google'
                       )}
+                      style={{
+                        backgroundColor: colors.primary,
+                        padding: 12,
+                        borderRadius: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: 8,
+                      }}
+                      activeOpacity={0.7}
                     >
                       <Ionicons name="search" size={16} color={colors.surface} />
-                      <ExternalLinkText>{t('movieDetails.searchGoogle')}</ExternalLinkText>
-                    </ExternalLinkButton>
+                      <Text style={{
+                        color: colors.surface,
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginLeft: 8,
+                      }}>
+                        {t('movieDetails.searchGoogle')}
+                      </Text>
+                    </TouchableOpacity>
 
-                    <ExternalLinkButton 
+                    <TouchableOpacity 
                       onPress={() => searchMovieOnline(
                         selectedMovie.title, 
                         movieDetails?.release_date || `${selectedMovie.year}-01-01`, 
                         'other'
                       )}
-                      style={{ backgroundColor: colors.secondary }}
+                      style={{
+                        backgroundColor: colors.secondary,
+                        padding: 12,
+                        borderRadius: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      activeOpacity={0.7}
                     >
                       <Ionicons name="play" size={16} color={colors.surface} />
-                      <ExternalLinkText>{t('movieDetails.searchOther')}</ExternalLinkText>
-                    </ExternalLinkButton>
-                  </ExternalLinksContainer>
+                      <Text style={{
+                        color: colors.surface,
+                        fontSize: 14,
+                        fontWeight: '600',
+                        marginLeft: 8,
+                      }}>
+                        {t('movieDetails.searchOther')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             </ScrollView>

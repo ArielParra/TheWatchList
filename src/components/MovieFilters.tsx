@@ -247,60 +247,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
           </SecondaryButton>
         </View>
 
-        {/* Separador */}
-        <View style={{ width: 1, height: 20, backgroundColor: colors.border }} />
 
-        {/* Rating y Año compactos lado a lado */}
-        <View style={{ flexDirection: 'row', gap: 4, flex: 1 }}>
-          <SearchInput
-            placeholder="⭐ 1-10"
-            placeholderTextColor={colors.textSecondary}
-            value={filters.rating > 1 ? filters.rating.toString() : ''}
-            onChangeText={(text: string) => {
-              if (text === '') {
-                setFilters({...filters, rating: 1});
-              } else {
-                if (/^\d*\.?\d*$/.test(text)) {
-                  const value = parseFloat(text);
-                  if (!isNaN(value) && value >= 1 && value <= 10) {
-                    setFilters({...filters, rating: value});
-                  }
-                }
-              }
-            }}
-            keyboardType="decimal-pad"
-            style={{ 
-              flex: 1,
-              fontSize: 10,
-              textAlign: 'center',
-              minHeight: 24,
-              marginLeft: 0
-            }}
-          />
-          
-          <SearchInput
-            placeholder="📅 año"
-            placeholderTextColor={colors.textSecondary}
-            value={filters.year}
-            onChangeText={(text: string) => {
-              if (text === '') {
-                setFilters({...filters, year: ''});
-              } else {
-                if (/^\d+$/.test(text) && text.length <= 4) {
-                  setFilters({...filters, year: text});
-                }
-              }
-            }}
-            keyboardType="number-pad"
-            style={{ 
-              flex: 1,
-              fontSize: 10,
-              textAlign: 'center',
-              minHeight: 24,
-              marginLeft: 0
-            }}
-          />
-        </View>
 
         {/* Limpiar */}
         <SecondaryButton 
@@ -376,6 +323,81 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
           ))}
         </View>
       </ScrollView>
+
+      {/* Fila 3: Rating y Año */}
+      <View style={{ 
+        flexDirection: 'row', 
+        gap: 6, 
+        marginTop: 6,
+        alignItems: 'center'
+      }}>
+        <Text style={{ 
+          color: colors.textSecondary, 
+          fontSize: 10,
+          minWidth: 40
+        }}>
+          Filtros:
+        </Text>
+        
+        <SearchInput
+          placeholder="⭐ rating"
+          placeholderTextColor={colors.textSecondary}
+          value={filters.rating > 1 ? filters.rating.toString() : ''}
+          onChangeText={(text: string) => {
+            if (text === '') {
+              setFilters({...filters, rating: 1});
+            } else {
+              if (/^\d*\.?\d*$/.test(text)) {
+                const value = parseFloat(text);
+                if (!isNaN(value) && value >= 1 && value <= 10) {
+                  setFilters({...filters, rating: value});
+                }
+              }
+            }
+          }}
+          keyboardType="decimal-pad"
+          style={{ 
+            width: 80,
+            fontSize: 12,
+            textAlign: 'center',
+            minHeight: 28,
+            backgroundColor: colors.surface,
+            borderWidth: 1,
+            borderColor: colors.border,
+            borderRadius: 8,
+            paddingHorizontal: 8,
+            color: colors.text
+          }}
+        />
+        
+        <SearchInput
+          placeholder="📅 año"
+          placeholderTextColor={colors.textSecondary}
+          value={filters.year}
+          onChangeText={(text: string) => {
+            if (text === '') {
+              setFilters({...filters, year: ''});
+            } else {
+              if (/^\d+$/.test(text) && text.length <= 4) {
+                setFilters({...filters, year: text});
+              }
+            }
+          }}
+          keyboardType="number-pad"
+          style={{ 
+            width: 80,
+            fontSize: 12,
+            textAlign: 'center',
+            minHeight: 28,
+            backgroundColor: colors.surface,
+            borderWidth: 1,
+            borderColor: colors.border,
+            borderRadius: 8,
+            paddingHorizontal: 8,
+            color: colors.text
+          }}
+        />
+      </View>
     </FilterContainer>
     </Animated.View>
   );

@@ -30,7 +30,7 @@ export const MovieList: React.FC<MovieListProps> = ({
   onAddMovie
 }) => {
   const { t } = useTranslation();
-  const { width } = useResponsive();
+  const { width, isMobile } = useResponsive();
 
   // Calcular número de columnas dinámicamente
   const calculateColumns = () => {
@@ -41,15 +41,21 @@ export const MovieList: React.FC<MovieListProps> = ({
     return Math.max(2, columns);
   };
 
-  // Calcular espaciado dinámico
+  // Calcular espaciado dinámico con límites para móvil
   const calculateSpacing = () => {
+    if (isMobile) {
+      // En móvil, usar espaciado fijo y compacto
+      return showImages ? 3 : 2; // Más compacto para lista, un poco más para cards con imagen
+    }
+    
+    // En tablet/desktop, usar cálculo dinámico
     const cardWidth = 158;
     const minPadding = 16;
     const columns = calculateColumns();
     const totalCardWidth = columns * cardWidth;
     const remainingSpace = width - totalCardWidth - minPadding;
     const spacingBetweenCards = remainingSpace / (columns + 1); // +1 para espacios en los extremos
-    return Math.max(4, spacingBetweenCards); // Mínimo 4px de espaciado
+    return Math.max(6, Math.min(12, spacingBetweenCards)); // Entre 6px y 12px en desktop
   };
 
   const numColumns = calculateColumns();
@@ -106,7 +112,7 @@ export const MovieList: React.FC<MovieListProps> = ({
         numColumns={numColumns}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ 
-          padding: cardSpacing / 2,
+          padding: isMobile ? 2 : cardSpacing / 2,
           flexGrow: 1
         }}
         columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
@@ -124,7 +130,7 @@ export const MovieList: React.FC<MovieListProps> = ({
       numColumns={numColumns}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ 
-        padding: cardSpacing / 2,
+        padding: isMobile ? 2 : cardSpacing / 2,
         flexGrow: 1
       }}
       columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}

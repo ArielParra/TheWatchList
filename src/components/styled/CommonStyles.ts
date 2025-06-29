@@ -80,23 +80,26 @@ export const TopBarActions = styled.View`
 export const SearchContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  background-color: ${colors.background};
+  background-color: ${colors.surface};
   border-radius: 12px;
-  padding: ${isMobile ? '10px 12px' : '12px 16px'};
+  padding: ${isMobile ? '8px 12px' : '10px 16px'};
   border: 1px solid ${colors.border};
-  flex: 1;
-  margin-right: ${isMobile ? '8px' : '0px'};
+  margin-top: ${isMobile ? '8px' : '12px'};
+  elevation: 2;
+  shadow-color: ${colors.shadow};
+  shadow-offset: 0px 1px;
+  shadow-opacity: 0.1;
+  shadow-radius: 2px;
 `;
 
 export const SearchInput = styled.TextInput`
   flex: 1;
-  font-size: ${isMobile ? '14px' : '16px'};
+  font-size: ${isMobile ? '16px' : '16px'};
   color: ${colors.text};
   margin-left: 8px;
-  background-color: ${colors.surface};
-  border: 1px solid ${colors.border};
-  border-radius: 8px;
-  padding: 8px 12px;
+  padding: ${isMobile ? '8px 0px' : '8px 0px'};
+  min-height: ${isMobile ? '20px' : '24px'};
+  font-weight: 400;
 `;
 
 // Botones modernos

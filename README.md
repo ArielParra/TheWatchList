@@ -2,6 +2,7 @@
 
 # RoadMap
 
+- editar nombres peliculas
 - dark light theme
 - menos peticiones al api
 - carrusel de peliculas
