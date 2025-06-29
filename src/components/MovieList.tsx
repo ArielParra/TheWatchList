@@ -1,7 +1,8 @@
 import React from 'react';
-import { FlatList, Dimensions } from 'react-native';
+import { FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { useResponsive } from '../hooks/useResponsive';
 import {
   CenterContainer,
   EmptyText,
@@ -12,8 +13,6 @@ import {
 import { Movie } from '../types';
 import { MovieCardWithImage } from './MovieCard';
 import { MinimalMovieItem } from './MinimalMovieItem';
-
-const { width } = Dimensions.get('window');
 
 interface MovieListProps {
   movies: Movie[];
@@ -31,6 +30,7 @@ export const MovieList: React.FC<MovieListProps> = ({
   onAddMovie
 }) => {
   const { t } = useTranslation();
+  const { width } = useResponsive();
 
   // Calcular número de columnas dinámicamente
   const calculateColumns = () => {

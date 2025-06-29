@@ -2,10 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import {
-  TopBar as StyledTopBar,
-  TopBarRow,
-  TopBarTitle,
-  TopBarActions,
   SearchContainer,
   SearchInput,
   IconButton,
@@ -13,6 +9,12 @@ import {
   RandomButtonText,
   colors
 } from './styled/CommonStyles';
+import { 
+  ResponsiveTopBar,
+  ResponsiveTopBarRow, 
+  ResponsiveTopBarTitle,
+  ResponsiveTopBarActions 
+} from './ResponsiveTopBar';
 import LanguageSelector from './LanguageSelector';
 import { Movie } from '../types';
 
@@ -46,10 +48,10 @@ export const TopBar: React.FC<TopBarProps> = ({
   };
 
   return (
-    <StyledTopBar>
-      <TopBarRow>
-        <TopBarTitle>🎬TheWatchList📝</TopBarTitle>
-        <TopBarActions>
+    <ResponsiveTopBar>
+      <ResponsiveTopBarRow>
+        <ResponsiveTopBarTitle>🎬TheWatchList📝</ResponsiveTopBarTitle>
+        <ResponsiveTopBarActions>
           <LanguageSelector />
           
           <RandomButton onPress={handleRandomSuggestion}>
@@ -82,8 +84,8 @@ export const TopBar: React.FC<TopBarProps> = ({
           <IconButton onPress={onAddMovie}>
             <Ionicons name="add" size={20} color={colors.primary} />
           </IconButton>
-        </TopBarActions>
-      </TopBarRow>
+        </ResponsiveTopBarActions>
+      </ResponsiveTopBarRow>
       
       {/* Search Bar */}
       <SearchContainer>
@@ -95,6 +97,6 @@ export const TopBar: React.FC<TopBarProps> = ({
           onChangeText={onSearchChange}
         />
       </SearchContainer>
-    </StyledTopBar>
+    </ResponsiveTopBar>
   );
 };

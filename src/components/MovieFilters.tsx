@@ -134,7 +134,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
               color: filters.watched === null ? colors.surface : colors.text,
               fontSize: 10
             }}>
-              Todas
+              {t('filters.all')}
             </ButtonText>
           </SecondaryButton>
           
@@ -351,7 +351,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
               color: filters.genre === '' ? colors.surface : colors.text,
               fontSize: 9
             }}>
-              Todos
+              {t('filters.all')}
             </ButtonText>
           </SecondaryButton>
           

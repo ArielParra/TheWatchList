@@ -10,6 +10,7 @@ export const breakpoints = {
   desktop: 1024
 };
 
+// Variables base (fallback para styled-components)
 export const isMobile = width < breakpoints.mobile;
 export const isTablet = width >= breakpoints.mobile && width < breakpoints.tablet;
 
@@ -223,6 +224,7 @@ export const MinimalCheckbox = styled.TouchableOpacity<{ checked: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 `;
 
 // Lista horizontal para las tarjetas con imágenes
@@ -286,6 +288,7 @@ export const Checkbox = styled.View<{ checked: boolean }>`
   align-items: center;
   justify-content: center;
   margin-right: 8px;
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 `;
 
 export const CheckboxText = styled.Text<{ checked: boolean }>`
