@@ -10,7 +10,7 @@
     "addMovieText": "Search for movies to add to your list",
     "loading": "Loading...",
     "noResults": "No results found",
-    "noMovies": "No movies in your list yet",
+    "noMovies": "No movies found in your list",
     "error": "Error",
     "errorLoading": "Error loading movies",
     "errorSearching": "Error searching movies",
@@ -23,13 +23,10 @@
     "pending": "Pending",
     "overview": "Overview",
     "whereToWatch": "Where to Watch",
-    "streamingOn": "Streaming",
-    "rentOn": "Rent",
-    "buyOn": "Buy",
     "noProviders": "No streaming providers available",
     "searchOnline": "Search Online",
     "searchGoogle": "Search on Google",
-    "searchYesMovies": "Search on YesMovies",
+    "searchOther": "Search on Other",
     "closeDetails": "Close Details"
   },
   "filters": {
@@ -61,5 +58,25 @@
     "pending": "Pending",
     "clear": "Clear Filters",
     "results": "results"
+  },
+  "movieDetails": {
+    "whereToWatch": "Where to Watch",
+    "noProviders": "No streaming providers available",
+    "searchOnline": "Search Online",
+    "searchGoogle": "Search on Google",
+    "searchOther": "Search on Other"
+  },
+  "topBar": {
+    "randomSuggestion": "Random"
+  },
+  "randomSuggestion": {
+    "title": "Random Suggestion",
+    "noUnwatchedMovies": "All movies watched! Add more to get suggestions.",
+    "suggestion": "How about watching:",
+    "watchNow": "Watch Now",
+    "anotherSuggestion": "Another Suggestion"
+  },
+  "footer": {
+    "madeWith": "made with ❤️ by Ariel for his ❤️ Anahi"
   }
 }

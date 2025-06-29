@@ -24,7 +24,69 @@ export const genres = [
   { id: 37, name: 'Western' }
 ];
 
-import { TMDBSearchResponse, TMDBMovie, WatchProvidersResponse } from '../types';
+// ✅ Proveedores de streaming permitidos
+export const allowedProviders = [
+  'Netflix',
+  'Amazon Prime Video',
+  'Amazon Prime Video with Ads',
+  'Prime Video',
+  'Claro video',
+  'Disney Plus',
+  'Disney+',
+  'ViX ',
+  'Max',
+  'HBO Max',
+  'ViX gratis',
+  'Mercado Play',
+  'Paramount Plus',
+  'Paramount+',
+  'Pluto TV'
+];
+
+// ✅ Función para verificar si un proveedor está permitido
+export const isProviderAllowed = (providerName: string): boolean => {
+  return allowedProviders.some(allowed => 
+    providerName.toLowerCase().includes(allowed.toLowerCase()) || 
+    allowed.toLowerCase().includes(providerName.toLowerCase())
+  );
+};
+
+// ✅ Función para obtener URL específica del proveedor
+export const getProviderUrl = (providerName: string, movieTitle: string): string => {
+  const query = encodeURIComponent(movieTitle);
+  
+  switch (providerName.toLowerCase()) {
+    case 'netflix':
+      return `https://www.netflix.com/search?q=${query}`;
+    case 'amazon prime video':
+    case 'amazon prime video with ads':
+    case 'prime video':
+      return `https://www.primevideo.com/search/ref=atv_nb_sr?phrase=${query}`;
+    case 'disney plus':
+    case 'disney+':
+      return `https://www.disneyplus.com/search?q=${query}`;
+    case 'max':
+    case 'hbo max':
+      return `https://www.max.com/search?q=${query}`;
+    case 'paramount plus':
+    case 'paramount+':
+      return `https://www.paramountplus.com/search/?query=${query}`;
+    case 'claro video':
+      return `https://www.clarovideo.com/mexico/buscar?q=${query}`;
+    case 'vix ':
+    case 'vix gratis':
+    case 'vix':
+      return `https://www.vix.com/es-mx/search?q=${query}`;
+    case 'mercado play':
+      return `https://play.mercadolibre.com.mx/search?q=${query}`;
+    case 'pluto tv':
+      return `https://pluto.tv/es/search?term=${query}`;
+    default:
+      return `https://www.google.com/search?q=${query}+${providerName}+streaming`;
+  }
+};
+
+import { TMDBSearchResponse, TMDBMovie, WatchProvidersResponse, WatchProvider } from '../types';
 
 // Función helper para obtener el código de idioma para TMDB
 const getTMDBLanguage = (language: string): string => {

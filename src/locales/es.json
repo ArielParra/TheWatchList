@@ -10,7 +10,7 @@
     "addMovieText": "Busca películas para añadir a tu lista",
     "loading": "Cargando...",
     "noResults": "No se encontraron resultados",
-    "noMovies": "Aún no tienes películas en tu lista",
+    "noMovies": "No se encontraron películas en tu lista",
     "error": "Error",
     "errorLoading": "Error al cargar películas",
     "errorSearching": "Error al buscar películas",
@@ -23,13 +23,10 @@
     "pending": "Pendiente",
     "overview": "Sinopsis",
     "whereToWatch": "Dónde Ver",
-    "streamingOn": "En Streaming",
-    "rentOn": "Alquilar",
-    "buyOn": "Comprar",
     "noProviders": "No hay proveedores de streaming disponibles",
     "searchOnline": "Buscar Online",
     "searchGoogle": "Buscar en Google",
-    "searchYesMovies": "Buscar en YesMovies",
+    "searchOther": "Buscar en Otra",
     "closeDetails": "Cerrar Detalles"
   },
   "filters": {
@@ -61,5 +58,25 @@
     "pending": "Pendientes",
     "clear": "Limpiar Filtros",
     "results": "resultados"
+  },
+  "movieDetails": {
+    "whereToWatch": "Dónde Ver",
+    "noProviders": "No hay proveedores de streaming disponibles",
+    "searchOnline": "Buscar Online",
+    "searchGoogle": "Buscar en Google",
+    "searchOther": "Buscar en Otra"
+  },
+  "topBar": {
+    "randomSuggestion": "Aleatoria"
+  },
+  "randomSuggestion": {
+    "title": "Sugerencia Aleatoria",
+    "noUnwatchedMovies": "¡Todas las películas vistas! Agrega más para obtener sugerencias.",
+    "suggestion": "¿Qué tal si vemos?",
+    "watchNow": "Ver Ahora",
+    "anotherSuggestion": "Otra Sugerencia"
+  },
+  "footer": {
+    "madeWith": "hecho con ❤️ por Ariel para su ❤️ Anahi"
   }
 }

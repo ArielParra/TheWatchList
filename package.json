@@ -12,7 +12,6 @@
     "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.1.0",
     "@react-native-async-storage/async-storage": "^2.1.2",
-    "@react-native-community/slider": "^4.5.7",
     "expo": "~53.0.13",
     "expo-constants": "^17.1.6",
     "expo-dotenv": "^0.1.0",

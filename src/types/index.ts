@@ -38,14 +38,16 @@ export interface WatchProvider {
   provider_id: number;
   provider_name: string;
   logo_path: string;
+  display_priority?: number;
 }
 
 export interface WatchProvidersResponse {
   results: {
     [countryCode: string]: {
+      link?: string;
       flatrate?: WatchProvider[];
-      rent?: WatchProvider[];
       buy?: WatchProvider[];
+      rent?: WatchProvider[];
     };
   };
 }
