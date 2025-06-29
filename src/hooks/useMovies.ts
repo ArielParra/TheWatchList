@@ -29,10 +29,31 @@ export const useMovies = () => {
 
   const toggleWatchStatus = async (movieId: string, currentStatus: boolean) => {
     try {
+      // Actualizar optimistamente el estado local primero
+      setMovies(prevMovies => 
+        prevMovies.map(movie => 
+          movie.id === movieId 
+            ? { ...movie, watched: !currentStatus }
+            : movie
+        )
+      );
+
+      // Luego actualizar en Firebase
       await updateMovieWatchStatus(movieId, !currentStatus);
-      await loadMovies();
+      
+      // No necesitamos recargar toda la lista, el estado ya está actualizado
     } catch (error) {
       console.error('Error updating watch status:', error);
+      
+      // Si hay error, revertir el cambio optimista
+      setMovies(prevMovies => 
+        prevMovies.map(movie => 
+          movie.id === movieId 
+            ? { ...movie, watched: currentStatus }
+            : movie
+        )
+      );
+      
       Alert.alert(t('messages.error'), t('messages.errorUpdating'));
     }
   };
@@ -41,10 +62,15 @@ export const useMovies = () => {
     loadMovies();
   }, []);
 
+  const addMovieToState = (newMovie: Movie) => {
+    setMovies(prevMovies => [...prevMovies, newMovie]);
+  };
+
   return {
     movies,
     loading,
     loadMovies,
-    toggleWatchStatus
+    toggleWatchStatus,
+    addMovieToState
   };
 };

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
-import { TMDBMovie } from '../types';
+import { TMDBMovie, Movie } from '../types';
 import { searchMovies } from '../services/tmdbApi';
 import { addMovieToFirestore, getMoviesFromFirestore } from '../services/firebaseService';
 
-export const useAddMovie = (onMovieAdded: () => void) => {
+export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
   const { t, i18n } = useTranslation();
   
   const [showAddModal, setShowAddModal] = useState(false);
@@ -59,8 +59,23 @@ export const useAddMovie = (onMovieAdded: () => void) => {
       const movieId = await addMovieToFirestore(tmdbMovie);
       console.log('✅ Película guardada con ID:', movieId);
       
-      console.log('🔄 Recargando lista de películas...');
-      await onMovieAdded();
+      // Crear el objeto Movie para actualización optimista
+      const newMovie: Movie = {
+        id: movieId,
+        tmdbId: tmdbMovie.id,
+        title: tmdbMovie.title,
+        year: new Date(tmdbMovie.release_date).getFullYear(),
+        genre: tmdbMovie.genre_ids?.length > 0 
+          ? tmdbMovie.genre_ids.map(id => id.toString()).join(', ')
+          : 'Unknown',
+        rating: tmdbMovie.vote_average,
+        poster: tmdbMovie.poster_path,
+        watched: false,
+        orderNumber: Date.now() // Usar timestamp como orderNumber temporal
+      };
+      
+      console.log('🔄 Añadiendo película a la lista local...');
+      onMovieAdded(newMovie);
       
       setShowAddModal(false);
       setAddSearchQuery('');

@@ -24,7 +24,7 @@ export const MinimalMovieItem: React.FC<MinimalMovieItemProps> = ({
   cardSpacing = 4
 }) => {
   const [hoverStyle, triggerHoverIn, triggerHoverOut] = useHoverAnimation({ 
-    scale: 2, 
+    scale: 1.2, 
     timing: 200,
     tension: 300,
     friction: 10 

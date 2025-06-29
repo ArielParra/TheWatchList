@@ -96,7 +96,7 @@ import { TMDBSearchResponse, TMDBMovie, WatchProvidersResponse, WatchProvider } 
 const getTMDBLanguage = (language: string): string => {
   switch (language) {
     case 'es':
-      return 'es-ES';
+      return 'es-MX';
     case 'en':
       return 'en-US';
     default:
@@ -112,10 +112,10 @@ export const searchMovies = async (query: string, language: string = 'en'): Prom
   return response.json();
 };
 
-export const getMovieDetails = async (movieId: number, language: string = 'en'): Promise<TMDBMovie> => {
+export const getMovieDetails = async (movieId: number, language: string = 'es'): Promise<TMDBMovie> => {
   const tmdbLanguage = getTMDBLanguage(language);
   const response = await fetch(
-    `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=${tmdbLanguage}`
+    `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=${tmdbLanguage}&region=MX`
   );
   return response.json();
 };

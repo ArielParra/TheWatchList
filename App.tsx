@@ -34,7 +34,7 @@ export default function App() {
   const [showFilters, setShowFilters] = useState(false);
 
   // Hooks personalizados
-  const { movies, loading, loadMovies, toggleWatchStatus } = useMovies();
+  const { movies, loading, loadMovies, toggleWatchStatus, addMovieToState } = useMovies();
   const { 
     searchQuery, 
     setSearchQuery, 
@@ -54,7 +54,7 @@ export default function App() {
     searchMoviesFromAPI,
     addMovieToList,
     closeAddModal
-  } = useAddMovie(loadMovies);
+  } = useAddMovie(addMovieToState);
 
   const {
     showDetailModal,

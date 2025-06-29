@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +31,7 @@ export const MovieList: React.FC<MovieListProps> = ({
 }) => {
   const { t } = useTranslation();
   const { width, isMobile } = useResponsive();
+  const flatListRef = useRef<FlatList>(null);
 
   // Calcular número de columnas dinámicamente
   const calculateColumns = () => {
@@ -105,6 +106,7 @@ export const MovieList: React.FC<MovieListProps> = ({
   if (showImages) {
     return (
       <FlatList
+        ref={flatListRef}
         key={`grid-mode-${numColumns}`}
         data={movies}
         renderItem={renderMovieCard}
@@ -117,12 +119,17 @@ export const MovieList: React.FC<MovieListProps> = ({
         }}
         columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
         ListEmptyComponent={<EmptyStateComponent />}
+        maintainVisibleContentPosition={{
+          minIndexForVisible: 0,
+          autoscrollToTopThreshold: 100
+        }}
       />
     );
   }
 
   return (
     <FlatList
+      ref={flatListRef}
       key={`list-mode-${numColumns}`}
       data={movies}
       renderItem={renderMinimalItem}
@@ -135,6 +142,10 @@ export const MovieList: React.FC<MovieListProps> = ({
       }}
       columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
       ListEmptyComponent={<EmptyStateComponent />}
+      maintainVisibleContentPosition={{
+        minIndexForVisible: 0,
+        autoscrollToTopThreshold: 100
+      }}
     />
   );
 };
