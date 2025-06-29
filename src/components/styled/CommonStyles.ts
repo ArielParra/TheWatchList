@@ -153,7 +153,6 @@ export const MovieCard = styled.TouchableOpacity<{ showImage: boolean }>`
   background-color: ${colors.surface};
   border-radius: 10px;
   padding: 10px;
-  margin: 2px 4px;
   width: ${(props: { showImage: boolean }) => props.showImage ? '150px' : '100%'};
   align-items: center;
   border: 1px solid ${colors.border};
@@ -196,7 +195,6 @@ export const MinimalMovieItem = styled.TouchableOpacity`
   background-color: ${colors.surface};
   border-radius: 8px;
   padding: 8px 12px;
-  margin: 2px 4px;
   width: 150px;
   flex-direction: row;
   align-items: center;

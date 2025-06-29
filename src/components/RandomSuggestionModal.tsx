@@ -40,7 +40,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
   // ✅ Modal de error cuando no hay películas sin ver disponibles
   if (showNoMoviesError || (!suggestedMovie && visible)) {
     return (
-      <Modal visible={visible} transparent animationType="fade">
+      <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
         <ModalContainer>
           <ModalContent>
             <CloseButton onPress={onClose}>
@@ -74,7 +74,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
   }
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <ModalContainer>
         <ModalContent>
           <CloseButton onPress={onClose}>

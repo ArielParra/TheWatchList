@@ -18,14 +18,20 @@ interface MovieCardProps {
   showImage: boolean;
   onPress: (movie: Movie) => void;
   onToggleWatch: (movieId: string, currentStatus: boolean) => void;
+  cardSpacing?: number;
 }
 
 export const MovieCardWithImage: React.FC<MovieCardProps> = ({ 
   item, 
   onPress, 
-  onToggleWatch 
+  onToggleWatch,
+  cardSpacing = 4
 }) => (
-  <StyledMovieCard showImage={true} onPress={() => onPress(item)}>
+  <StyledMovieCard 
+    showImage={true} 
+    onPress={() => onPress(item)}
+    style={{ margin: cardSpacing }}
+  >
     {item.poster && (
       <MoviePoster 
         source={{ uri: getImageUrl(item.poster) }}

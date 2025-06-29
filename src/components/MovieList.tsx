@@ -34,14 +34,26 @@ export const MovieList: React.FC<MovieListProps> = ({
 
   // Calcular número de columnas dinámicamente
   const calculateColumns = () => {
-    const cardWidth = 158;
-    const padding = 16;
-    const availableWidth = width - padding;
+    const cardWidth = 158; // Ancho de la card (150px + padding + border)
+    const minPadding = 16; // Padding mínimo del contenedor
+    const availableWidth = width - minPadding;
     const columns = Math.floor(availableWidth / cardWidth);
     return Math.max(2, columns);
   };
 
+  // Calcular espaciado dinámico
+  const calculateSpacing = () => {
+    const cardWidth = 158;
+    const minPadding = 16;
+    const columns = calculateColumns();
+    const totalCardWidth = columns * cardWidth;
+    const remainingSpace = width - totalCardWidth - minPadding;
+    const spacingBetweenCards = remainingSpace / (columns + 1); // +1 para espacios en los extremos
+    return Math.max(4, spacingBetweenCards); // Mínimo 4px de espaciado
+  };
+
   const numColumns = calculateColumns();
+  const cardSpacing = calculateSpacing();
 
   // Componente EmptyState reutilizable
   const EmptyStateComponent = () => (
@@ -71,6 +83,7 @@ export const MovieList: React.FC<MovieListProps> = ({
       showImage={showImages}
       onPress={onMoviePress}
       onToggleWatch={onToggleWatch}
+      cardSpacing={cardSpacing}
     />
   );
 
@@ -79,6 +92,7 @@ export const MovieList: React.FC<MovieListProps> = ({
       item={item}
       onPress={onMoviePress}
       onToggleWatch={onToggleWatch}
+      cardSpacing={cardSpacing}
     />
   );
 
@@ -92,10 +106,10 @@ export const MovieList: React.FC<MovieListProps> = ({
         numColumns={numColumns}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ 
-          padding: 8,
+          padding: cardSpacing / 2,
           flexGrow: 1
         }}
-        columnWrapperStyle={numColumns > 1 ? { justifyContent: 'flex-start' } : undefined}
+        columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
         ListEmptyComponent={<EmptyStateComponent />}
       />
     );
@@ -110,10 +124,10 @@ export const MovieList: React.FC<MovieListProps> = ({
       numColumns={numColumns}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ 
-        padding: 8,
+        padding: cardSpacing / 2,
         flexGrow: 1
       }}
-      columnWrapperStyle={numColumns > 1 ? { justifyContent: 'flex-start' } : undefined}
+      columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
       ListEmptyComponent={<EmptyStateComponent />}
     />
   );

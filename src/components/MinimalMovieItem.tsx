@@ -12,14 +12,19 @@ interface MinimalMovieItemProps {
   item: Movie;
   onPress: (movie: Movie) => void;
   onToggleWatch: (movieId: string, currentStatus: boolean) => void;
+  cardSpacing?: number;
 }
 
 export const MinimalMovieItem: React.FC<MinimalMovieItemProps> = ({ 
   item, 
   onPress, 
-  onToggleWatch 
+  onToggleWatch,
+  cardSpacing = 4
 }) => (
-  <StyledMinimalMovieItem onPress={() => onPress(item)}>
+  <StyledMinimalMovieItem 
+    onPress={() => onPress(item)}
+    style={{ margin: cardSpacing }}
+  >
     <MinimalCheckbox 
       checked={item.watched}
       onPress={(e: any) => {
