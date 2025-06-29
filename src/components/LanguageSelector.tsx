@@ -49,16 +49,14 @@ export const LanguageSelector: React.FC = () => {
         active={currentLanguage === 'es'}
         onPress={() => handleLanguageChange('es')}
       >
-        <FlagText>🇲🇽</FlagText>
-        <LanguageText active={currentLanguage === 'es'}>ES</LanguageText>
+      <LanguageText active={currentLanguage === 'es'}>ES</LanguageText>
       </LanguageButton>
       
       <LanguageButton 
         active={currentLanguage === 'en'}
         onPress={() => handleLanguageChange('en')}
       >
-        <FlagText>🇺🇸</FlagText>
-        <LanguageText active={currentLanguage === 'en'}>EN</LanguageText>
+      <LanguageText active={currentLanguage === 'en'}>EN</LanguageText>
       </LanguageButton>
     </LanguageContainer>
   );
