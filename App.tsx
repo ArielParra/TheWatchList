@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import './src/i18n';
+import { ensureI18nInitialized } from './src/i18n';
 
 import {
   SafeContainer,
@@ -27,11 +27,22 @@ import { useMovieDetails } from './src/hooks/useMovieDetails';
 import { useRandomSuggestion } from './src/hooks/useRandomSuggestion';
 
 export default function App() {
+  const [i18nReady, setI18nReady] = useState(false);
   const { t } = useTranslation();
   
   // Estados de UI
   const [showImages, setShowImages] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+
+  // Asegurar que i18n esté inicializado
+  useEffect(() => {
+    ensureI18nInitialized().then(() => {
+      setI18nReady(true);
+    }).catch((error) => {
+      console.error('Error ensuring i18n initialization:', error);
+      setI18nReady(true); // Continuar aunque haya error
+    });
+  }, []);
 
   // Hooks personalizados
   const { movies, loading, loadMovies, toggleWatchStatus, addMovieToState } = useMovies();
@@ -97,6 +108,18 @@ export default function App() {
   const handleRandomSuggestion = () => generateRandomSuggestion(movies);
   const handleViewNowFromModal = () => handleViewNow(openMovieDetails);
   const handleAnotherSuggestionFromModal = () => handleAnotherSuggestion(movies);
+
+  // Mostrar loading mientras i18n se inicializa
+  if (!i18nReady) {
+    return (
+      <SafeContainer>
+        <CenterContainer>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <EmptyText>Loading...</EmptyText>
+        </CenterContainer>
+      </SafeContainer>
+    );
+  }
 
   if (loading) {
     return (

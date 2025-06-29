@@ -19,9 +19,19 @@ const resources = {
 
 // Función para detectar el idioma
 const getDeviceLanguage = () => {
-  const deviceLanguage = Localization.locale.split('-')[0];
-  // Si el dispositivo está en español, usar español, sino inglés
-  return deviceLanguage === 'es' ? 'es' : 'en';
+  try {
+    const locale = Localization.locale;
+    if (!locale || typeof locale !== 'string') {
+      console.warn('Device locale not available, defaulting to English');
+      return 'en';
+    }
+    const deviceLanguage = locale.split('-')[0];
+    // Si el dispositivo está en español, usar español, sino inglés
+    return deviceLanguage === 'es' ? 'es' : 'en';
+  } catch (error) {
+    console.error('Error detecting device language:', error);
+    return 'en';
+  }
 };
 
 // Función para obtener el idioma guardado o detectar automáticamente
@@ -55,24 +65,58 @@ export const changeLanguage = async (language: string) => {
 };
 
 const initI18n = async () => {
-  const initialLanguage = await getStoredLanguage();
-  
-  i18n
-    .use(initReactI18next)
-    .init({
-      resources,
-      lng: initialLanguage,
-      fallbackLng: 'en',
-      interpolation: {
-        escapeValue: false
-      },
-      react: {
-        useSuspense: false
-      }
-    });
+  try {
+    const initialLanguage = await getStoredLanguage();
+    
+    await i18n
+      .use(initReactI18next)
+      .init({
+        resources,
+        lng: initialLanguage,
+        fallbackLng: 'en',
+        interpolation: {
+          escapeValue: false
+        },
+        react: {
+          useSuspense: false
+        }
+      });
+    
+    console.log('i18n initialized with language:', initialLanguage);
+  } catch (error) {
+    console.error('Error initializing i18n:', error);
+    // Fallback initialization
+    i18n
+      .use(initReactI18next)
+      .init({
+        resources,
+        lng: 'en',
+        fallbackLng: 'en',
+        interpolation: {
+          escapeValue: false
+        },
+        react: {
+          useSuspense: false
+        }
+      });
+  }
 };
 
-// Inicializar i18n
-initI18n();
+// Inicializar i18n y exportar una promesa para asegurar inicialización
+let i18nInitialized = false;
+const initPromise = initI18n().then(() => {
+  i18nInitialized = true;
+}).catch((error) => {
+  console.error('Failed to initialize i18n:', error);
+  i18nInitialized = true; // Marcar como inicializado aunque haya fallado
+});
+
+// Función para asegurar que i18n esté inicializado
+export const ensureI18nInitialized = async () => {
+  if (!i18nInitialized) {
+    await initPromise;
+  }
+  return i18n;
+};
 
 export default i18n;
