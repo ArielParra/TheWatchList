@@ -1,4 +1,5 @@
 import React from 'react';
+import { Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
   MinimalMovieItem as StyledMinimalMovieItem,
@@ -7,6 +8,7 @@ import {
   colors
 } from './styled/CommonStyles';
 import { Movie } from '../types';
+import useHoverAnimation from '../hooks/useHoverAnimation';
 
 interface MinimalMovieItemProps {
   item: Movie;
@@ -20,23 +22,35 @@ export const MinimalMovieItem: React.FC<MinimalMovieItemProps> = ({
   onPress, 
   onToggleWatch,
   cardSpacing = 4
-}) => (
-  <StyledMinimalMovieItem 
-    onPress={() => onPress(item)}
-    style={{ margin: cardSpacing }}
-  >
-    <MinimalCheckbox 
-      checked={item.watched}
-      onPress={(e: any) => {
-        e.stopPropagation();
-        onToggleWatch(item.id, item.watched);
-      }}
-    >
-      {item.watched && (
-        <Ionicons name="checkmark" size={12} color={colors.surface} />
-      )}
-    </MinimalCheckbox>
-    
-    <MinimalMovieTitle numberOfLines={2}>{item.title}</MinimalMovieTitle>
-  </StyledMinimalMovieItem>
-);
+}) => {
+  const [hoverStyle, triggerHoverIn, triggerHoverOut] = useHoverAnimation({ 
+    scale: 2, 
+    timing: 200,
+    tension: 300,
+    friction: 10 
+  });
+
+  return (
+    <Animated.View style={[{ margin: cardSpacing }, hoverStyle]}>
+      <StyledMinimalMovieItem 
+        onPress={() => onPress(item)}
+        onMouseEnter={triggerHoverIn}
+        onMouseLeave={triggerHoverOut}
+      >
+        <MinimalCheckbox 
+          checked={item.watched}
+          onPress={(e: any) => {
+            e.stopPropagation();
+            onToggleWatch(item.id, item.watched);
+          }}
+        >
+          {item.watched && (
+            <Ionicons name="checkmark" size={12} color={colors.surface} />
+          )}
+        </MinimalCheckbox>
+        
+        <MinimalMovieTitle numberOfLines={2}>{item.title}</MinimalMovieTitle>
+      </StyledMinimalMovieItem>
+    </Animated.View>
+  );
+};
