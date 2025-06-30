@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, ViewStyle, Dimensions } from 'react-native';
 import { colors } from './styled/CommonStyles';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface ModalOverlayProps {
   children: React.ReactNode;
@@ -26,6 +28,13 @@ export const ModalOverlay: React.FC<ModalOverlayProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
           padding: 16,
+          minHeight: screenHeight, // Asegurar altura completa en Android
+          width: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
         },
         style
       ]}

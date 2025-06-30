@@ -114,9 +114,14 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
       transparent={true}
       onRequestClose={onClose}
       statusBarTranslucent={true}
+      presentationStyle="overFullScreen" // Mejor soporte para Android
     >
       <ModalOverlay style={{ padding: 16 }}>
-        <ModalContent style={{ maxHeight: '90%' }}>
+        <ModalContent style={{ 
+          maxHeight: '90%',
+          minHeight: 600, // Altura mínima para asegurar que se vea el contenido
+          flex: 0 // Evita problemas de flex en Android
+        }}>
           <TopBarRow style={{ 
             flexDirection: 'row', 
             justifyContent: 'space-between', 
@@ -176,39 +181,47 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
           </View>
 
           {loading ? (
-            <CenterContainer>
+            <CenterContainer style={{ minHeight: 300 }}>
               <ActivityIndicator size="large" color={colors.primary} />
             </CenterContainer>
           ) : (
-            <FlatList
-              key="search-results"
-              data={searchResults}
-              renderItem={renderSearchResult}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={3}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ 
-                padding: 8,
-                paddingBottom: 20,
-                flexGrow: 1
-              }}
-              style={{ flex: 1 }}
-              columnWrapperStyle={{ 
-                justifyContent: 'space-around',
-                paddingHorizontal: 2
-              }}
-              ListEmptyComponent={
-                searchQuery ? (
-                  <CenterContainer>
-                    <EmptyText>{t('messages.noResults')}</EmptyText>
-                  </CenterContainer>
-                ) : (
-                  <CenterContainer>
-                    <EmptyText>{t('messages.addMovieText')}</EmptyText>
-                  </CenterContainer>
-                )
-              }
-            />
+            <View style={{ flex: 1, minHeight: 300 }}>
+              <FlatList
+                key="search-results"
+                data={searchResults}
+                renderItem={renderSearchResult}
+                keyExtractor={(item) => item.id.toString()}
+                numColumns={3}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ 
+                  padding: 8,
+                  paddingBottom: 20,
+                  flexGrow: 1,
+                  minHeight: 250 // Altura mínima para el contenido
+                }}
+                style={{ 
+                  flex: 1,
+                  minHeight: 250 // Altura mínima para el FlatList
+                }}
+                columnWrapperStyle={{ 
+                  justifyContent: 'space-around',
+                  paddingHorizontal: 2
+                }}
+                ListEmptyComponent={
+                  <View style={{ 
+                    flex: 1, 
+                    justifyContent: 'center', 
+                    alignItems: 'center',
+                    minHeight: 200,
+                    paddingVertical: 40
+                  }}>
+                    <EmptyText style={{ textAlign: 'center', fontSize: 16 }}>
+                      {searchQuery ? t('messages.noResults') : t('messages.addMovieText')}
+                    </EmptyText>
+                  </View>
+                }
+              />
+            </View>
           )}
         </ModalContent>
       </ModalOverlay>
