@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
   MinimalMovieItem as StyledMinimalMovieItem,
@@ -30,12 +30,17 @@ export const MinimalMovieItem: React.FC<MinimalMovieItemProps> = ({
     friction: 10 
   });
 
+  // Solo aplicar hover en web
+  const isWeb = Platform.OS === 'web';
+
   return (
-    <Animated.View style={[{ margin: cardSpacing }, hoverStyle]}>
+    <Animated.View style={[{ margin: cardSpacing }, isWeb ? hoverStyle : {}]}>
       <StyledMinimalMovieItem 
         onPress={() => onPress(item)}
-        onMouseEnter={triggerHoverIn}
-        onMouseLeave={triggerHoverOut}
+        {...(isWeb && {
+          onMouseEnter: triggerHoverIn,
+          onMouseLeave: triggerHoverOut
+        })}
       >
         <MinimalCheckbox 
           checked={item.watched}

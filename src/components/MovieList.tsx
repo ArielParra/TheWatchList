@@ -37,6 +37,9 @@ export const MovieList: React.FC<MovieListProps> = ({
   // Navegación con teclado para PC
   useEffect(() => {
     if (Platform.OS !== 'web' || isMobile || movies.length === 0) return;
+    
+    // Validación adicional para asegurar que document existe
+    if (typeof document === 'undefined') return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
@@ -116,10 +119,16 @@ export const MovieList: React.FC<MovieListProps> = ({
       });
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
+    // Validar que document existe antes de agregar el listener
+    if (typeof document !== 'undefined' && document.addEventListener) {
+      document.addEventListener('keydown', handleKeyDown);
+      
+      return () => {
+        if (typeof document !== 'undefined' && document.removeEventListener) {
+          document.removeEventListener('keydown', handleKeyDown);
+        }
+      };
+    }
   }, [movies, selectedIndex, isMobile, onMoviePress, showImages]);
 
   // Resetear índice seleccionado cuando cambian las películas

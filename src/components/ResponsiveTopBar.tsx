@@ -20,10 +20,6 @@ export const ResponsiveTopBar: React.FC<ResponsiveTopBarProps> = ({ children }) 
       elevation: 10,
       zIndex: 1000,
       paddingTop: isMobile ? 16 : 16,
-      shadowColor: colors.shadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
     }}>
       {children}
     </View>

@@ -27,7 +27,7 @@ export const colors = {
   text: '#1e293b',         // Gris oscuro
   textSecondary: '#64748b', // Gris medio
   border: '#e2e8f0',       // Gris claro
-  shadow: '#64748b20'      // Gris con transparencia
+  boxShadow: '#64748b20'      // Gris con transparencia
 };
 
 // Contenedores principales
@@ -86,10 +86,10 @@ export const SearchContainer = styled.View`
   border: 1px solid ${colors.border};
   margin-top: ${isMobile ? '8px' : '12px'};
   elevation: 2;
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 1px;
-  shadow-opacity: 0.1;
-  shadow-radius: 2px;
+  boxShadow-color: ${colors.boxShadow};
+  boxShadow-offset: 0px 1px;
+  boxShadow-opacity: 0.1px;
+  boxShadow-radius: 2px;
 `;
 
 export const SearchInput = styled.TextInput`
@@ -391,10 +391,10 @@ export const MovieDetailContent = styled.View`
   max-width: ${isMobile ? '100%' : '600px'};
   min-height: ${isMobile ? '200px' : 'auto'};
   elevation: 10;
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 10px;
-  shadow-opacity: 0.3;
-  shadow-radius: 20px;
+  boxShadow-color: ${colors.boxShadow};
+  boxShadow-offset: 0px 10px;
+  boxShadow-opacity: 0.3px;
+  boxShadow-radius: 20px;
 `;
 
 export const MovieDetailHeader = styled.View`

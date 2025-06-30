@@ -45,13 +45,6 @@ const TooltipButton = ({ children, tooltip, style, ...props }: any) => {
               borderRadius: 4,
               minWidth: 80,
               alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
               elevation: 9000,
             }}>
               <Text style={{ 
@@ -218,12 +211,16 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
                 backgroundColor: filters.watched === null ? colors.primary : colors.surface,
                 paddingHorizontal: 8,
                 paddingVertical: 4,
-                borderRadius: 12
+                borderRadius: 12,
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
             >
               <ButtonText style={{ 
                 color: filters.watched === null ? colors.surface : colors.text,
-                fontSize: 12
+                fontSize: 9,
+                textAlign: 'center',
+                lineHeight: 14
               }}>
                 {t('filters.all')}
               </ButtonText>
@@ -430,7 +427,8 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
                   <ButtonText style={{ 
                     color: filters.genre === '' ? colors.surface : colors.text,
                     fontSize: 9,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    lineHeight: 14
                   }}>
                     {t('filters.all')}
                   </ButtonText>
@@ -491,7 +489,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
             >
               <ButtonText style={{ 
                 color: filters.genre === '' ? colors.surface : colors.text,
-                fontSize: 12,
+                fontSize: 9,
                 textAlign: 'center',
                 lineHeight: 14
               }}>

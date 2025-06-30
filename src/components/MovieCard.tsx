@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
   MovieCard as StyledMovieCard,
@@ -36,13 +36,18 @@ export const MovieCardWithImage: React.FC<MovieCardProps> = ({
     friction: 10 
   });
 
+  // Solo aplicar hover en web
+  const isWeb = Platform.OS === 'web';
+
   return (
-    <Animated.View style={[{ margin: cardSpacing }, hoverStyle]}>
+    <Animated.View style={[{ margin: cardSpacing }, isWeb ? hoverStyle : {}]}>
       <StyledMovieCard 
         showImage={true} 
         onPress={() => onPress(item)}
-        onMouseEnter={triggerHoverIn}
-        onMouseLeave={triggerHoverOut}
+        {...(isWeb && {
+          onMouseEnter: triggerHoverIn,
+          onMouseLeave: triggerHoverOut
+        })}
       >
         {item.poster && (
           <MoviePoster 
