@@ -56,7 +56,9 @@
     "watched": "Watched",
     "pending": "Pending",
     "clear": "Clear Filters",
-    "results": "results"
+    "results": "results",
+    "noFilters": "No filters",
+    "label": "Filters"
   },
   "movieDetails": {
     "whereToWatch": "Where to Watch",

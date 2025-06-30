@@ -31,30 +31,40 @@ const TooltipButton = ({ children, tooltip, style, ...props }: any) => {
           <View style={{
             position: 'absolute',
             bottom: '100%',
-            left: '50%',
-            transform: [{ translateX: -50 }],
-            backgroundColor: '#333',
-            paddingHorizontal: 8,
-            paddingVertical: 4,
-            borderRadius: 4,
-            marginBottom: 5,
-            zIndex: 1000,
-            minWidth: 80,
-            alignItems: 'center'
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+            marginBottom: 2,
+            zIndex: 9000,
+            elevation: 9000, // Para Android
           }}>
-            <Text style={{ 
-              color: 'white', 
-              fontSize: 11, 
-              textAlign: 'center',
-              fontWeight: '500'
-            }}>
-              {tooltip}
-            </Text>
             <View style={{
-              position: 'absolute',
-              top: '100%',
-              left: '50%',
-              transform: [{ translateX: -5 }],
+              backgroundColor: '#333',
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 4,
+              minWidth: 80,
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 9000,
+            }}>
+              <Text style={{ 
+                color: 'white', 
+                fontSize: 11, 
+                textAlign: 'center',
+                fontWeight: '500'
+              }}>
+                {tooltip}
+              </Text>
+            </View>
+            <View style={{
+              marginTop: -1,
               width: 0,
               height: 0,
               borderLeftWidth: 5,
@@ -129,13 +139,24 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
     const activeFilters = [];
     if (filters.watched !== null) activeFilters.push(filters.watched ? 'Vistas' : 'Pendientes');
     if (filters.rating > 1) activeFilters.push(`≥${filters.rating}⭐`);
-    if (filters.year) activeFilters.push(`${filters.year}`);
+    if (filters.year) {
+      const yearStr:string = filters.year;
+      let displayYear:string = yearStr; 
+      if (yearStr.length === 1) {
+        displayYear = `${yearStr}000s`;
+      } else if (yearStr.length === 2) {
+        displayYear = `${yearStr}00s`;
+      } else if (yearStr.length === 3) {
+        displayYear = `${yearStr}0s`;
+      }      
+      activeFilters.push(displayYear);
+    }
     if (filters.genre) {
       const translatedGenre = t(`genres.${filters.genre}`);
       console.log(`Active filter genre debug: ${filters.genre} -> ${translatedGenre}`);
       activeFilters.push(translatedGenre !== `genres.${filters.genre}` ? translatedGenre : filters.genre);
     }
-    return activeFilters.length > 0 ? activeFilters.join(' • ') : 'Sin filtros';
+    return activeFilters.length > 0 ? activeFilters.join(' • ') : t('filters.noFilters');
   };
 
   return (
@@ -522,11 +543,11 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
           fontSize: 10,
           minWidth: 40
         }}>
-          Filtros:
+          {t('filters.label')}:
         </Text>
         
         <SearchInput
-          placeholder={isMobile ? "rating" : "⭐ rating"}
+          placeholder={"⭐ rating"}
           placeholderTextColor={colors.textSecondary}
           value={filters.rating > 1 ? filters.rating.toString() : ''}
           onChangeText={(text: string) => {
@@ -557,7 +578,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
         />
         
         <SearchInput
-          placeholder={isMobile ? "año" : "📅 año"}
+          placeholder={`📅 ${t('filters.year')}`}
           placeholderTextColor={colors.textSecondary}
           value={filters.year}
           onChangeText={(text: string) => {

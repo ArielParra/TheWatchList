@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { FlatList } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import { FlatList, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useResponsive } from '../hooks/useResponsive';
@@ -32,6 +32,100 @@ export const MovieList: React.FC<MovieListProps> = ({
   const { t } = useTranslation();
   const { width, isMobile } = useResponsive();
   const flatListRef = useRef<FlatList>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // Navegación con teclado para PC
+  useEffect(() => {
+    if (Platform.OS !== 'web' || isMobile || movies.length === 0) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowUp':
+          event.preventDefault();
+          setSelectedIndex(prev => {
+            const numColumns = calculateColumns();
+            const newIndex = Math.max(0, prev - numColumns);
+            scrollToIndex(newIndex);
+            return newIndex;
+          });
+          break;
+          
+        case 'ArrowDown':
+          event.preventDefault();
+          setSelectedIndex(prev => {
+            const numColumns = calculateColumns();
+            const newIndex = Math.min(movies.length - 1, prev + numColumns);
+            scrollToIndex(newIndex);
+            return newIndex;
+          });
+          break;
+          
+        case 'ArrowLeft':
+          event.preventDefault();
+          setSelectedIndex(prev => {
+            const newIndex = Math.max(0, prev - 1);
+            scrollToIndex(newIndex);
+            return newIndex;
+          });
+          break;
+          
+        case 'ArrowRight':
+          event.preventDefault();
+          setSelectedIndex(prev => {
+            const newIndex = Math.min(movies.length - 1, prev + 1);
+            scrollToIndex(newIndex);
+            return newIndex;
+          });
+          break;
+          
+        case 'Home':
+          event.preventDefault();
+          setSelectedIndex(0);
+          scrollToIndex(0);
+          break;
+          
+        case 'End':
+          event.preventDefault();
+          const lastIndex = movies.length - 1;
+          setSelectedIndex(lastIndex);
+          scrollToIndex(lastIndex);
+          break;
+          
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+          if (movies[selectedIndex]) {
+            onMoviePress(movies[selectedIndex]);
+          }
+          break;
+      }
+    };
+
+    const scrollToIndex = (index: number) => {
+      if (!flatListRef.current || index < 0 || index >= movies.length) return;
+      
+      // Usar scrollToOffset en lugar de scrollToIndex para mejor confiabilidad
+      const numColumns = calculateColumns();
+      const itemHeight = showImages ? 240 : 80;
+      const rowIndex = Math.floor(index / numColumns);
+      const offset = rowIndex * itemHeight;
+      
+      flatListRef.current.scrollToOffset({
+        offset,
+        animated: true
+      });
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [movies, selectedIndex, isMobile, onMoviePress, showImages]);
+
+  // Resetear índice seleccionado cuando cambian las películas
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [movies]);
 
   // Calcular número de columnas dinámicamente
   const calculateColumns = () => {
@@ -62,8 +156,11 @@ export const MovieList: React.FC<MovieListProps> = ({
   const numColumns = calculateColumns();
   const cardSpacing = calculateSpacing();
 
-  // Componente EmptyState reutilizable
-  const EmptyStateComponent = () => (
+  // KeyExtractor optimizado
+  const keyExtractor = React.useCallback((item: Movie) => item.id, []);
+
+  // Componente EmptyState reutilizable y optimizado
+  const EmptyStateComponent = React.useCallback(() => (
     <CenterContainer style={{ 
       flex: 1, 
       minHeight: 400,
@@ -82,9 +179,9 @@ export const MovieList: React.FC<MovieListProps> = ({
         <ButtonText>{t('buttons.addMovie')}</ButtonText>
       </PrimaryButton>
     </CenterContainer>
-  );
+  ), [showImages, t, onAddMovie]);
 
-  const renderMovieCard = ({ item }: { item: Movie }) => (
+  const renderMovieCard = React.useCallback(({ item, index }: { item: Movie; index: number }) => (
     <MovieCardWithImage
       item={item}
       showImage={showImages}
@@ -92,16 +189,16 @@ export const MovieList: React.FC<MovieListProps> = ({
       onToggleWatch={onToggleWatch}
       cardSpacing={cardSpacing}
     />
-  );
+  ), [showImages, onMoviePress, onToggleWatch, cardSpacing]);
 
-  const renderMinimalItem = ({ item }: { item: Movie }) => (
+  const renderMinimalItem = React.useCallback(({ item, index }: { item: Movie; index: number }) => (
     <MinimalMovieItem
       item={item}
       onPress={onMoviePress}
       onToggleWatch={onToggleWatch}
       cardSpacing={cardSpacing}
     />
-  );
+  ), [onMoviePress, onToggleWatch, cardSpacing]);
 
   if (showImages) {
     return (
@@ -110,7 +207,7 @@ export const MovieList: React.FC<MovieListProps> = ({
         key={`grid-mode-${numColumns}`}
         data={movies}
         renderItem={renderMovieCard}
-        keyExtractor={(item) => item.id}
+        keyExtractor={keyExtractor}
         numColumns={numColumns}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ 
@@ -118,11 +215,16 @@ export const MovieList: React.FC<MovieListProps> = ({
           flexGrow: 1
         }}
         columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
-        ListEmptyComponent={<EmptyStateComponent />}
+        ListEmptyComponent={EmptyStateComponent}
         maintainVisibleContentPosition={{
           minIndexForVisible: 0,
           autoscrollToTopThreshold: 100
         }}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        updateCellsBatchingPeriod={50}
+        initialNumToRender={20}
+        windowSize={10}
       />
     );
   }
@@ -133,7 +235,7 @@ export const MovieList: React.FC<MovieListProps> = ({
       key={`list-mode-${numColumns}`}
       data={movies}
       renderItem={renderMinimalItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={keyExtractor}
       numColumns={numColumns}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ 
@@ -141,11 +243,16 @@ export const MovieList: React.FC<MovieListProps> = ({
         flexGrow: 1
       }}
       columnWrapperStyle={numColumns > 1 ? { justifyContent: 'center' } : undefined}
-      ListEmptyComponent={<EmptyStateComponent />}
+      ListEmptyComponent={EmptyStateComponent}
       maintainVisibleContentPosition={{
         minIndexForVisible: 0,
         autoscrollToTopThreshold: 100
       }}
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={10}
+      updateCellsBatchingPeriod={50}
+      initialNumToRender={20}
+      windowSize={10}
     />
   );
 };
