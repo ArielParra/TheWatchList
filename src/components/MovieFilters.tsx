@@ -197,7 +197,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
         marginBottom: 6,
         alignItems: isMobile ? 'stretch' : 'center'
       }}>
-        {/* Primera subfila: Estado y Orden */}
+        {/* Primera subfila: Estado (en móvil solo estado, en PC estado y orden) */}
         <View style={{ 
           flexDirection: 'row', 
           gap: 6, 
@@ -271,135 +271,140 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
             </TooltipButton>
           </View>
 
-          {/* Separador */}
-          <View style={{ width: 1, height: 20, backgroundColor: colors.border }} />
+          {/* Separador y Ordenamiento solo en PC */}
+          {!isMobile && (
+            <>
+              {/* Separador */}
+              <View style={{ width: 1, height: 20, backgroundColor: colors.border }} />
 
-          {/* Ordenamiento */}
-          <View style={{ flexDirection: 'row', gap: 3 }}>
-            <TooltipButton 
-              onPress={() => setFilters({...filters, sortBy: 'orderNumber'})}
-              tooltip={t('filters.orderNumber')}
-              style={{ 
-                backgroundColor: filters.sortBy === 'orderNumber' ? colors.primary : colors.surface,
-                paddingHorizontal: 6,
-                paddingVertical: 4,
-                borderRadius: 12,
-                minHeight: 28,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <ButtonText style={{ 
-                color: filters.sortBy === 'orderNumber' ? colors.surface : colors.text,
-                fontSize: 10,
-                lineHeight: 12
-              }}>
-                📝
-              </ButtonText>
-            </TooltipButton>
-            
-            <TooltipButton 
-              onPress={() => setFilters({...filters, sortBy: 'alphabetical'})}
-              tooltip={t('filters.alphabetical')}
-              style={{ 
-                backgroundColor: filters.sortBy === 'alphabetical' ? colors.primary : colors.surface,
-                paddingHorizontal: 6,
-                paddingVertical: 4,
-                borderRadius: 12,
-                minHeight: 28,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <ButtonText style={{ 
-                color: filters.sortBy === 'alphabetical' ? colors.surface : colors.text,
-                fontSize: isMobile ? 8 : 10,
-                lineHeight: isMobile ? 10 : 12
-              }}>
-                🔤
-              </ButtonText>
-            </TooltipButton>
-            
-            <TooltipButton 
-              onPress={() => setFilters({...filters, sortBy: 'year'})}
-              tooltip={t('filters.year')}
-              style={{ 
-                backgroundColor: filters.sortBy === 'year' ? colors.primary : colors.surface,
-                paddingHorizontal: 6,
-                paddingVertical: 4,
-                borderRadius: 12,
-                minHeight: 28,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <ButtonText style={{ 
-                color: filters.sortBy === 'year' ? colors.surface : colors.text,
-                fontSize: 10,
-                lineHeight: 12
-              }}>
-                📅
-              </ButtonText>
-            </TooltipButton>
-            
-            <TooltipButton 
-              onPress={() => setFilters({...filters, sortOrder: filters.sortOrder === 'asc' ? 'desc' : 'asc'})}
-              tooltip={filters.sortOrder === 'asc' ? t('filters.ascending') : t('filters.descending')}
-              style={{ 
-                backgroundColor: colors.accent,
-                paddingHorizontal: 6,
-                paddingVertical: 4,
-                borderRadius: 12,
-                minHeight: 28,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <ButtonText style={{ 
-                color: colors.surface,
-                fontSize: 10,
-                lineHeight: 12
-              }}>
-                {filters.sortOrder === 'asc' ? '⬆️' : '⬇️'}
-              </ButtonText>
-            </TooltipButton>
-          </View>
+              {/* Ordenamiento */}
+              <View style={{ flexDirection: 'row', gap: 3 }}>
+                <TooltipButton 
+                  onPress={() => setFilters({...filters, sortBy: 'orderNumber'})}
+                  tooltip={t('filters.orderNumber')}
+                  style={{ 
+                    backgroundColor: filters.sortBy === 'orderNumber' ? colors.primary : colors.surface,
+                    paddingHorizontal: 6,
+                    paddingVertical: 4,
+                    borderRadius: 12,
+                    minHeight: 28,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <ButtonText style={{ 
+                    color: filters.sortBy === 'orderNumber' ? colors.surface : colors.text,
+                    fontSize: 10,
+                    lineHeight: 12
+                  }}>
+                    📝
+                  </ButtonText>
+                </TooltipButton>
+                
+                <TooltipButton 
+                  onPress={() => setFilters({...filters, sortBy: 'alphabetical'})}
+                  tooltip={t('filters.alphabetical')}
+                  style={{ 
+                    backgroundColor: filters.sortBy === 'alphabetical' ? colors.primary : colors.surface,
+                    paddingHorizontal: 6,
+                    paddingVertical: 4,
+                    borderRadius: 12,
+                    minHeight: 28,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <ButtonText style={{ 
+                    color: filters.sortBy === 'alphabetical' ? colors.surface : colors.text,
+                    fontSize: isMobile ? 8 : 10,
+                    lineHeight: isMobile ? 10 : 12
+                  }}>
+                    🔤
+                  </ButtonText>
+                </TooltipButton>
+                
+                <TooltipButton 
+                  onPress={() => setFilters({...filters, sortBy: 'year'})}
+                  tooltip={t('filters.year')}
+                  style={{ 
+                    backgroundColor: filters.sortBy === 'year' ? colors.primary : colors.surface,
+                    paddingHorizontal: 6,
+                    paddingVertical: 4,
+                    borderRadius: 12,
+                    minHeight: 28,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <ButtonText style={{ 
+                    color: filters.sortBy === 'year' ? colors.surface : colors.text,
+                    fontSize: 10,
+                    lineHeight: 12
+                  }}>
+                    📅
+                  </ButtonText>
+                </TooltipButton>
+                
+                <TooltipButton 
+                  onPress={() => setFilters({...filters, sortOrder: filters.sortOrder === 'asc' ? 'desc' : 'asc'})}
+                  tooltip={filters.sortOrder === 'asc' ? t('filters.ascending') : t('filters.descending')}
+                  style={{ 
+                    backgroundColor: colors.accent,
+                    paddingHorizontal: 6,
+                    paddingVertical: 4,
+                    borderRadius: 12,
+                    minHeight: 28,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <ButtonText style={{ 
+                    color: colors.surface,
+                    fontSize: 10,
+                    lineHeight: 12
+                  }}>
+                    {filters.sortOrder === 'asc' ? '⬆️' : '⬇️'}
+                  </ButtonText>
+                </TooltipButton>
+              </View>
 
-          {/* Limpiar */}
-          <TooltipButton 
-            onPress={() => setFilters({ 
-              genre: '', 
-              year: '', 
-              yearRange: { min: 1900, max: currentYear },
-              yearFilterType: 'specific',
-              watched: null, 
-              rating: 1,
-              ratingRange: { min: 1, max: 10 },
-              ratingFilterType: 'specific',
-              sortBy: 'orderNumber',
-              sortOrder: 'asc'
-            })}
-            tooltip={t('filters.clear')}
-            style={{ 
-              backgroundColor: colors.surface,
-              borderWidth: 1,
-              borderColor: colors.border,
-              paddingHorizontal: 8,
-              paddingVertical: 4,
-              borderRadius: 12,
-              minHeight: 28,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <ButtonText style={{ 
-              color: colors.text, 
-              fontSize: isMobile ? 8 : 9,
-              lineHeight: isMobile ? 10 : 12
-            }}>
-              🗑️
-            </ButtonText>
-          </TooltipButton>
+              {/* Limpiar */}
+              <TooltipButton 
+                onPress={() => setFilters({ 
+                  genre: '', 
+                  year: '', 
+                  yearRange: { min: 1900, max: currentYear },
+                  yearFilterType: 'specific',
+                  watched: null, 
+                  rating: 1,
+                  ratingRange: { min: 1, max: 10 },
+                  ratingFilterType: 'specific',
+                  sortBy: 'orderNumber',
+                  sortOrder: 'asc'
+                })}
+                tooltip={t('filters.clear')}
+                style={{ 
+                  backgroundColor: colors.surface,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  paddingHorizontal: 8,
+                  paddingVertical: 4,
+                  borderRadius: 12,
+                  minHeight: 28,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <ButtonText style={{ 
+                  color: colors.text, 
+                  fontSize: isMobile ? 8 : 9,
+                  lineHeight: isMobile ? 10 : 12
+                }}>
+                  🗑️
+                </ButtonText>
+              </TooltipButton>
+            </>
+          )}
         </View>
 
         {/* Géneros (en PC en la misma fila, en móvil en fila separada) */}
@@ -466,7 +471,146 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
         )}
       </View>
 
-      {/* Géneros en móvil (fila separada) */}
+      {/* Fila 2 en móvil: Ordenamiento */}
+      {isMobile && (
+        <View style={{ 
+          flexDirection: 'row', 
+          gap: 3, 
+          marginBottom: 6,
+          alignItems: 'center',
+          justifyContent: 'flex-start'
+        }}>
+          {/* Ordenamiento */}
+          <TooltipButton 
+            onPress={() => setFilters({...filters, sortBy: 'orderNumber'})}
+            tooltip={t('filters.orderNumber')}
+            style={{ 
+              backgroundColor: filters.sortBy === 'orderNumber' ? colors.primary : colors.surface,
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              borderRadius: 12,
+              minHeight: 28,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <ButtonText style={{ 
+              color: filters.sortBy === 'orderNumber' ? colors.surface : colors.text,
+              fontSize: 10,
+              lineHeight: 12
+            }}>
+              📝
+            </ButtonText>
+          </TooltipButton>
+          
+          <TooltipButton 
+            onPress={() => setFilters({...filters, sortBy: 'alphabetical'})}
+            tooltip={t('filters.alphabetical')}
+            style={{ 
+              backgroundColor: filters.sortBy === 'alphabetical' ? colors.primary : colors.surface,
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              borderRadius: 12,
+              minHeight: 28,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <ButtonText style={{ 
+              color: filters.sortBy === 'alphabetical' ? colors.surface : colors.text,
+              fontSize: 8,
+              lineHeight: 10
+            }}>
+              🔤
+            </ButtonText>
+          </TooltipButton>
+          
+          <TooltipButton 
+            onPress={() => setFilters({...filters, sortBy: 'year'})}
+            tooltip={t('filters.year')}
+            style={{ 
+              backgroundColor: filters.sortBy === 'year' ? colors.primary : colors.surface,
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              borderRadius: 12,
+              minHeight: 28,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <ButtonText style={{ 
+              color: filters.sortBy === 'year' ? colors.surface : colors.text,
+              fontSize: 10,
+              lineHeight: 12
+            }}>
+              📅
+            </ButtonText>
+          </TooltipButton>
+          
+          <TooltipButton 
+            onPress={() => setFilters({...filters, sortOrder: filters.sortOrder === 'asc' ? 'desc' : 'asc'})}
+            tooltip={filters.sortOrder === 'asc' ? t('filters.ascending') : t('filters.descending')}
+            style={{ 
+              backgroundColor: colors.accent,
+              paddingHorizontal: 6,
+              paddingVertical: 4,
+              borderRadius: 12,
+              minHeight: 28,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <ButtonText style={{ 
+              color: colors.surface,
+              fontSize: 10,
+              lineHeight: 12
+            }}>
+              {filters.sortOrder === 'asc' ? '⬆️' : '⬇️'}
+            </ButtonText>
+          </TooltipButton>
+
+          {/* Separador */}
+          <View style={{ width: 1, height: 20, backgroundColor: colors.border, marginHorizontal: 4 }} />
+
+          {/* Limpiar */}
+          <TooltipButton 
+            onPress={() => setFilters({ 
+              genre: '', 
+              year: '', 
+              yearRange: { min: 1900, max: currentYear },
+              yearFilterType: 'specific',
+              watched: null, 
+              rating: 1,
+              ratingRange: { min: 1, max: 10 },
+              ratingFilterType: 'specific',
+              sortBy: 'orderNumber',
+              sortOrder: 'asc'
+            })}
+            tooltip={t('filters.clear')}
+            style={{ 
+              backgroundColor: colors.surface,
+              borderWidth: 1,
+              borderColor: colors.border,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
+              borderRadius: 12,
+              minHeight: 28,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <ButtonText style={{ 
+              color: colors.text, 
+              fontSize: 8,
+              lineHeight: 10
+            }}>
+              🗑️
+            </ButtonText>
+          </TooltipButton>
+        </View>
+      )}
+
+      {/* Géneros en móvil (fila 3) */}
       {isMobile && (
         <ScrollView 
           horizontal 
