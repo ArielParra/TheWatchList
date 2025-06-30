@@ -117,7 +117,24 @@ export const getMovieDetails = async (movieId: number, language: string = 'en'):
   const response = await fetch(
     `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=${tmdbLanguage}&region=MX`
   );
-  return response.json();
+  const movieDetails = await response.json();
+  
+  // Si no hay descripción en el idioma solicitado, intentar obtenerla en inglés como fallback
+  if (!movieDetails.overview && language !== 'en') {
+    try {
+      const englishResponse = await fetch(
+        `${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US&region=MX`
+      );
+      const englishDetails = await englishResponse.json();
+      if (englishDetails.overview) {
+        movieDetails.overview = englishDetails.overview;
+      }
+    } catch (error) {
+      console.log('Could not fetch English fallback description');
+    }
+  }
+  
+  return movieDetails;
 };
 
 export const getImageUrl = (posterPath: string): string => {

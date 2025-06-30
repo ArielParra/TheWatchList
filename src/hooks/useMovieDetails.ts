@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Movie, TMDBMovie, WatchProvidersResponse } from '../types';
@@ -19,8 +19,8 @@ export const useMovieDetails = () => {
       setShowDetailModal(true);
       setDetailLoading(true);
 
-      // Obtener detalles completos de TMDB - usar 'en' para consistencia de géneros
-      const details = await getMovieDetails(movie.tmdbId, 'en');
+      // Obtener detalles completos de TMDB - usar idioma actual para descripción localizada
+      const details = await getMovieDetails(movie.tmdbId, i18n.language);
       setMovieDetails(details);
 
       // Obtener proveedores de streaming - usar idioma actual para localización
@@ -41,6 +41,28 @@ export const useMovieDetails = () => {
     setMovieDetails(null);
     setWatchProviders(null);
   };
+
+  // Efecto para recargar detalles cuando cambia el idioma
+  useEffect(() => {
+    if (selectedMovie && showDetailModal) {
+      // Recargar detalles cuando cambia el idioma
+      const reloadDetails = async () => {
+        try {
+          setDetailLoading(true);
+          const details = await getMovieDetails(selectedMovie.tmdbId, i18n.language);
+          setMovieDetails(details);
+          const providers = await getWatchProviders(selectedMovie.tmdbId, i18n.language);
+          setWatchProviders(providers);
+          setDetailLoading(false);
+        } catch (error) {
+          console.error('Error reloading movie details:', error);
+          setDetailLoading(false);
+        }
+      };
+      
+      reloadDetails();
+    }
+  }, [i18n.language, selectedMovie?.tmdbId, showDetailModal]);
 
   return {
     showDetailModal,
