@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import {
   MovieCard as StyledMovieCard,
   MoviePoster,
@@ -68,7 +68,7 @@ export const MovieCardWithImage: React.FC<MovieCardProps> = ({
           >
             <Checkbox checked={item.watched}>
               {item.watched && (
-                <Ionicons name="checkmark" size={14} color={colors.surface} />
+                <UniversalIcon name="checkmark" size={14} color={colors.surface} />
               )}
             </Checkbox>
           </CheckboxContainer>

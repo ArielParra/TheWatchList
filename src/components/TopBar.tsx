@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import {
   SearchContainer,
   SearchInput,
@@ -55,7 +55,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           <LanguageSelector />
           
           <RandomButton onPress={handleRandomSuggestion}>
-            <Ionicons name="shuffle" size={16} color={colors.surface} />
+            <UniversalIcon name="shuffle" size={16} color={colors.surface} />
             <RandomButtonText>{t('topBar.randomSuggestion')}</RandomButtonText>
           </RandomButton>
           
@@ -63,8 +63,8 @@ export const TopBar: React.FC<TopBarProps> = ({
             active={showImages}
             onPress={onToggleImages}
           >
-            <Ionicons 
-              name={showImages ? "image" : "image-outline"} 
+            <UniversalIcon 
+              name={showImages ? "image-outline" : "image-outline"} 
               size={20} 
               color={showImages ? colors.surface : colors.primary} 
             />
@@ -74,7 +74,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             active={showFilters}
             onPress={onToggleFilters}
           >
-            <Ionicons 
+            <UniversalIcon 
               name={showFilters ? "filter" : "filter-outline"} 
               size={20} 
               color={showFilters ? colors.surface : colors.primary} 
@@ -82,14 +82,14 @@ export const TopBar: React.FC<TopBarProps> = ({
           </IconButton>
           
           <IconButton onPress={onAddMovie}>
-            <Ionicons name="add" size={20} color={colors.primary} />
+            <UniversalIcon name="add" size={20} color={colors.primary} />
           </IconButton>
         </ResponsiveTopBarActions>
       </ResponsiveTopBarRow>
       
       {/* Search Bar */}
       <SearchContainer>
-        <Ionicons name="search" size={20} color={colors.textSecondary} />
+        <UniversalIcon name="search" size={20} color={colors.textSecondary} />
         <SearchInput
           placeholder={t('messages.searchPlaceholder')}
           placeholderTextColor={colors.textSecondary}

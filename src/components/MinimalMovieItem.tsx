@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import {
   MinimalMovieItem as StyledMinimalMovieItem,
   MinimalCheckbox,
@@ -50,7 +50,7 @@ export const MinimalMovieItem: React.FC<MinimalMovieItemProps> = ({
           }}
         >
           {item.watched && (
-            <Ionicons name="checkmark" size={12} color={colors.surface} />
+            <UniversalIcon name="checkmark" size={12} color={colors.surface} />
           )}
         </MinimalCheckbox>
         

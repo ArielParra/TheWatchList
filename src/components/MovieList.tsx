@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FlatList, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import { useTranslation } from 'react-i18next';
 import { useResponsive } from '../hooks/useResponsive';
 import {
@@ -176,7 +176,7 @@ export const MovieList: React.FC<MovieListProps> = ({
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-      <Ionicons 
+      <UniversalIcon 
         name={showImages ? "film-outline" : "list-outline"} 
         size={64} 
         color={colors.textSecondary} 

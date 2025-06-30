@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, ScrollView, Linking, Alert, TouchableOpacity, View, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import { useResponsive } from '../hooks/useResponsive';
 import {
   MovieDetailModal as MovieDetailModalContainer,
@@ -147,7 +147,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
             }}
             activeOpacity={0.7}
           >
-            <Ionicons name="close" size={20} color={colors.text} />
+            <UniversalIcon name="close" size={20} color={colors.text} />
           </TouchableOpacity>
 
           {loading ? (
@@ -235,7 +235,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                     borderRadius: 20,
                     alignSelf: isMobile ? 'center' : 'flex-start'
                   }}>
-                    <Ionicons 
+                    <UniversalIcon 
                       name={selectedMovie.watched ? "checkmark-circle" : "time"} 
                       size={18} 
                       color={colors.surface} 
@@ -382,7 +382,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                       }}
                       activeOpacity={0.7}
                     >
-                      <Ionicons name="search" size={16} color={colors.surface} />
+                      <UniversalIcon name="search" size={16} color={colors.surface} />
                       <Text style={{
                         color: colors.surface,
                         fontSize: 14,
@@ -409,7 +409,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                       }}
                       activeOpacity={0.7}
                     >
-                      <Ionicons name="play" size={16} color={colors.surface} />
+                      <UniversalIcon name="play" size={16} color={colors.surface} />
                       <Text style={{
                         color: colors.surface,
                         fontSize: 14,

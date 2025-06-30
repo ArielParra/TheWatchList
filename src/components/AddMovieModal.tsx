@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, FlatList, ActivityIndicator, View, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import {
   ModalContainer,
@@ -18,6 +17,7 @@ import {
   colors
 } from './styled/CommonStyles';
 import { ModalOverlay } from './ModalOverlay';
+import UniversalIcon from './UniversalIcon';
 import { TMDBMovie } from '../types';
 import { getImageUrl } from '../services/tmdbApi';
 
@@ -100,7 +100,7 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
               padding: 2
             }}
           >
-            <Ionicons name="add" size={14} color={colors.primary} />
+            <UniversalIcon name="add" size={14} color={colors.primary} />
           </IconButton>
         </MovieInfo>
       </MovieCard>
@@ -135,7 +135,7 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
               backgroundColor: 'transparent',
               borderWidth: 0
             }}>
-              <Ionicons name="close" size={24} color={colors.text} />
+              <UniversalIcon name="close" size={24} color={colors.text} />
             </IconButton>
           </TopBarRow>
           
@@ -176,7 +176,7 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
               minWidth: 32,
               minHeight: 32
             }}>
-              <Ionicons name="search" size={20} color={colors.primary} />
+              <UniversalIcon name="search" size={20} color={colors.primary} />
             </IconButton>
           </View>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import styled from 'styled-components/native';
 import { changeLanguage } from '../i18n';
 import { colors } from './styled/CommonStyles';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
+import UniversalIcon from './UniversalIcon';
 import {
   ModalContainer,
   ModalContent,
@@ -51,7 +51,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
         <ModalOverlay style={{ padding: 16 }}>
           <ModalContent>
             <CloseButton onPress={onClose}>
-              <Ionicons name="close" size={20} color={colors.text} />
+              <UniversalIcon name="close" size={20} color={colors.text} />
             </CloseButton>
             
             <Title style={{ textAlign: 'center', marginTop: 20 }}>
@@ -91,7 +91,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
       <ModalOverlay style={{ padding: 16 }}>
         <ModalContent>
           <CloseButton onPress={onClose}>
-            <Ionicons name="close" size={20} color={colors.text} />
+            <UniversalIcon name="close" size={20} color={colors.text} />
           </CloseButton>
           
           <Title style={{ textAlign: 'center', marginTop: 20 }}>
