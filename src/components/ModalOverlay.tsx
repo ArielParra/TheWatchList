@@ -25,13 +25,7 @@ export const ModalOverlay: React.FC<ModalOverlayProps> = ({
           backgroundColor,
           justifyContent: 'center',
           alignItems: 'center',
-          // Propiedades específicas para Android
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 1000,
+          padding: 16,
         },
         style
       ]}

@@ -386,9 +386,15 @@ export const MovieDetailContent = styled.View`
   border-radius: 20px;
   padding: ${isMobile ? '16px' : '20px'};
   max-height: ${isMobile ? '85%' : '80%'};
-  width: ${isMobile ? '100%' : '90%'};
+  height: ${isMobile ? 'auto' : 'auto'};
+  width: ${isMobile ? '95%' : '90%'};
   max-width: ${isMobile ? '100%' : '600px'};
+  min-height: ${isMobile ? '200px' : 'auto'};
   elevation: 10;
+  shadow-color: ${colors.shadow};
+  shadow-offset: 0px 10px;
+  shadow-opacity: 0.3;
+  shadow-radius: 20px;
 `;
 
 export const MovieDetailHeader = styled.View`

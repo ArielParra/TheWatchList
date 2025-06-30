@@ -47,7 +47,7 @@ export const MovieCardWithImage: React.FC<MovieCardProps> = ({
         {item.poster && (
           <MoviePoster 
             source={{ uri: getImageUrl(item.poster) }}
-            defaultSource={require('../../assets/icon.png')}
+            defaultSource={require('../../assets/default.png')}
           />
         )}
         

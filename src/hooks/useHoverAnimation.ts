@@ -1,5 +1,5 @@
 import { useRef, useCallback } from 'react';
-import { Animated } from 'react-native';
+import { Animated, Platform } from 'react-native';
 
 interface UseHoverAnimationProps {
   x?: number;
@@ -19,6 +19,9 @@ function useHoverAnimation({
   tension = 300,
   friction = 10,
 }: UseHoverAnimationProps = {}) {
+  // Use native driver only on native platforms, not on web
+  const useNativeDriver = Platform.OS !== 'web';
+  
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
   const rotateValue = useRef(new Animated.Value(0)).current;
@@ -31,28 +34,28 @@ function useHoverAnimation({
         toValue: x,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(translateY, {
         toValue: y,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(rotateValue, {
         toValue: rotation,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(scaleValue, {
         toValue: scale,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
     ]).start();
-  }, [x, y, rotation, scale, tension, friction, translateX, translateY, rotateValue, scaleValue]);
+  }, [x, y, rotation, scale, tension, friction, translateX, translateY, rotateValue, scaleValue, useNativeDriver]);
 
   const triggerHoverOut = useCallback(() => {
     // Reset to original state
@@ -61,28 +64,28 @@ function useHoverAnimation({
         toValue: 0,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(translateY, {
         toValue: 0,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(rotateValue, {
         toValue: 0,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
       Animated.spring(scaleValue, {
         toValue: 1,
         tension,
         friction,
-        useNativeDriver: true,
+        useNativeDriver,
       }),
     ]).start();
-  }, [tension, friction, translateX, translateY, rotateValue, scaleValue]);
+  }, [tension, friction, translateX, translateY, rotateValue, scaleValue, useNativeDriver]);
 
   const animatedStyle = {
     transform: [

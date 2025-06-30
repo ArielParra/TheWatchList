@@ -67,7 +67,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
             </MovieDetails>
             
             <PrimaryButton onPress={onClose} style={{ marginTop: 20 }}>
-              <ButtonText onPress={onClose}>OK</ButtonText>
+              <ButtonText>OK</ButtonText>
             </PrimaryButton>
           </ModalContent>
         </ModalOverlay>
@@ -112,7 +112,7 @@ export const RandomSuggestionModal: React.FC<RandomSuggestionModalProps> = ({
               <MoviePoster
                 source={{ uri: getImageUrl(suggestedMovie.poster) }}
                 style={{ marginBottom: 16 }}
-                defaultSource={require('../../assets/icon.png')}
+                defaultSource={require('../../assets/default.png')}
               />
             )}
             

@@ -67,7 +67,7 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
         {item.poster_path && (
           <MoviePoster 
             source={{ uri: getImageUrl(item.poster_path) }}
-            defaultSource={require('../../assets/icon.png')}
+            defaultSource={require('../../assets/default.png')}
             style={{ 
               height: 100, // Poster más pequeño para 3 columnas
               width: '100%',

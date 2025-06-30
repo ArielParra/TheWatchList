@@ -171,7 +171,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
                   }}>
                     <MovieDetailPoster 
                       source={{ uri: getImageUrl(selectedMovie.poster) }}
-                      defaultSource={require('../../assets/icon.png')}
+                      defaultSource={require('../../assets/default.png')}
                       style={{
                         width: isMobile ? 120 : 140,
                         height: isMobile ? 180 : 210,
