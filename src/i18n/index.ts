@@ -29,7 +29,7 @@ const getDeviceLanguage = () => {
     // Si el dispositivo está en español, usar español, sino inglés
     return deviceLanguage === 'es' ? 'es' : 'en';
   } catch (error) {
-    console.error('Error detecting device language:', error);
+    //console.error('Error detecting device language:', error);
     return 'en';
   }
 };
@@ -44,7 +44,7 @@ const getStoredLanguage = async () => {
     // Si no hay idioma guardado, usar el del dispositivo
     return getDeviceLanguage();
   } catch (error) {
-    console.error('Error getting stored language:', error);
+    //console.error('Error getting stored language:', error);
     return getDeviceLanguage();
   }
 };
@@ -54,7 +54,7 @@ export const saveLanguage = async (language: string) => {
   try {
     await AsyncStorage.setItem(LANGUAGE_KEY, language);
   } catch (error) {
-    console.error('Error saving language:', error);
+    //console.error('Error saving language:', error);
   }
 };
 
@@ -82,9 +82,9 @@ const initI18n = async () => {
         }
       });
     
-    console.log('i18n initialized with language:', initialLanguage);
+    //console.log('i18n initialized with language:', initialLanguage);
   } catch (error) {
-    console.error('Error initializing i18n:', error);
+    //console.error('Error initializing i18n:', error);
     // Fallback initialization
     i18n
       .use(initReactI18next)
@@ -107,7 +107,7 @@ let i18nInitialized = false;
 const initPromise = initI18n().then(() => {
   i18nInitialized = true;
 }).catch((error) => {
-  console.error('Failed to initialize i18n:', error);
+  //console.error('Failed to initialize i18n:', error);
   i18nInitialized = true; // Marcar como inicializado aunque haya fallado
 });
 

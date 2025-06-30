@@ -130,7 +130,7 @@ export const getMovieDetails = async (movieId: number, language: string = 'en'):
         movieDetails.overview = englishDetails.overview;
       }
     } catch (error) {
-      console.log('Could not fetch English fallback description');
+      //console.log('Could not fetch English fallback description');
     }
   }
   
@@ -148,7 +148,7 @@ export const getWatchProviders = async (movieId: number, language: string = 'en'
     );
     return response.json();
   } catch (error) {
-    console.error('Error fetching watch providers:', error);
+    //console.error('Error fetching watch providers:', error);
     return { results: {} };
   }
 };

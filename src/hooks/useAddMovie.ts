@@ -28,7 +28,7 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
         setAddSearchQuery(customQuery);
       }
     } catch (error) {
-      console.error('Error searching movies:', error);
+      //console.error('Error searching movies:', error);
       Alert.alert(t('messages.error'), t('messages.errorSearching'));
     } finally {
       setSearchLoading(false);
@@ -41,14 +41,14 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
       const existsInDB = allMovies.some(movie => movie.tmdbId === tmdbId);
       return existsInDB;
     } catch (error) {
-      console.error('Error checking movie existence:', error);
+      //console.error('Error checking movie existence:', error);
       return false;
     }
   };
 
   const addMovieToList = async (tmdbMovie: TMDBMovie) => {
     try {
-      console.log('🎬 Intentando añadir película:', tmdbMovie.title);
+      //console.log('🎬 Intentando añadir película:', tmdbMovie.title);
       
       const exists = await checkMovieExists(tmdbMovie.id);
       if (exists) {
@@ -56,9 +56,9 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
         return;
       }
 
-      console.log('💾 Guardando película en base de datos...');
+      //console.log('💾 Guardando película en base de datos...');
       const movieId = await addMovieToFirestore(tmdbMovie);
-      console.log('✅ Película guardada con ID:', movieId);
+      //console.log('✅ Película guardada con ID:', movieId);
       
       // Crear el objeto Movie para actualización optimista
       const newMovie: Movie = {
@@ -75,7 +75,7 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
         orderNumber: Date.now() // Usar timestamp como orderNumber temporal
       };
       
-      console.log('🔄 Añadiendo película a la lista local...');
+      //console.log('🔄 Añadiendo película a la lista local...');
       onMovieAdded(newMovie);
       
       setShowAddModal(false);
@@ -83,7 +83,7 @@ export const useAddMovie = (onMovieAdded: (newMovie: Movie) => void) => {
       setSearchResults([]);
       Alert.alert('✅ ¡Éxito!', t('messages.addedToList'));
     } catch (error) {
-      console.error('❌ Error añadiendo película:', error);
+      //console.error('❌ Error añadiendo película:', error);
       Alert.alert(t('messages.error'), t('messages.errorAdding'));
     }
   };

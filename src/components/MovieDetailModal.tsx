@@ -66,7 +66,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
         Alert.alert('Error', 'Cannot open this link');
       }
     } catch (error) {
-      console.error('Error opening link:', error);
+      //console.error('Error opening link:', error);
       Alert.alert('Error', 'Cannot open this link');
     }
   };
@@ -80,7 +80,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
     
     try {
       const url = getProviderUrl(providerName, selectedMovie.title);
-      console.log(`Opening ${providerName} for "${selectedMovie.title}": ${url}`);
+      //console.log(`Opening ${providerName} for "${selectedMovie.title}": ${url}`);
       
       const supported = await Linking.canOpenURL(url);
       if (supported) {
@@ -89,7 +89,7 @@ export const MovieDetailModalComponent: React.FC<MovieDetailModalProps> = ({
         Alert.alert('Error', 'Cannot open this link');
       }
     } catch (error) {
-      console.error('Error opening provider link:', error);
+      //console.error('Error opening provider link:', error);
       Alert.alert('Error', `Failed to open ${providerName}`);
     }
   };

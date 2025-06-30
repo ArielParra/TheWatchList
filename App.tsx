@@ -39,7 +39,7 @@ export default function App() {
     ensureI18nInitialized().then(() => {
       setI18nReady(true);
     }).catch((error) => {
-      console.error('Error ensuring i18n initialization:', error);
+      //console.error('Error ensuring i18n initialization:', error);
       setI18nReady(true); // Continuar aunque haya error
     });
   }, []);

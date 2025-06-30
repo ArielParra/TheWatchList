@@ -22,7 +22,7 @@ const getNextOrderNumber = async (): Promise<number> => {
     const count = snapshot.data().count;
     return count + 1;
   } catch (error) {
-    console.error('Error getting count:', error);
+    //console.error('Error getting count:', error);
     // Si hay error, obtener todos los documentos y contar
     const querySnapshot = await getDocs(collection(db, MOVIES_COLLECTION));
     return querySnapshot.size + 1;
@@ -31,8 +31,8 @@ const getNextOrderNumber = async (): Promise<number> => {
 
 export const addMovieToFirestore = async (tmdbMovie: TMDBMovie): Promise<string> => {
   try {
-    console.log('🔥 Firebase: Iniciando addMovieToFirestore');
-    console.log('📊 TMDB Movie data:', JSON.stringify(tmdbMovie, null, 2));
+    //console.log('🔥 Firebase: Iniciando addMovieToFirestore');
+    //console.log('📊 TMDB Movie data:', JSON.stringify(tmdbMovie, null, 2));
 
     // Verificar que db esté inicializado
     if (!db) {
@@ -41,7 +41,7 @@ export const addMovieToFirestore = async (tmdbMovie: TMDBMovie): Promise<string>
 
     // Obtener el siguiente número de orden
     const orderNumber = await getNextOrderNumber();
-    console.log('🔢 Número de orden asignado:', orderNumber);
+    //console.log('🔢 Número de orden asignado:', orderNumber);
 
     // Crear el objeto movie sin overview
     const movie: Omit<Movie, 'id'> = {
@@ -60,30 +60,30 @@ export const addMovieToFirestore = async (tmdbMovie: TMDBMovie): Promise<string>
       orderNumber: orderNumber // ✅ Nuevo campo
     };
 
-    console.log('📋 Movie object to save:', JSON.stringify(movie, null, 2));
+    //console.log('📋 Movie object to save:', JSON.stringify(movie, null, 2));
 
     // Intentar añadir el documento
-    console.log('💾 Añadiendo documento a Firestore...');
-    console.log('🗂️ Collection name:', MOVIES_COLLECTION);
+    //console.log('💾 Añadiendo documento a Firestore...');
+    //console.log('🗂️ Collection name:', MOVIES_COLLECTION);
     
     const docRef = await addDoc(collection(db, MOVIES_COLLECTION), movie);
     
-    console.log('✅ Documento añadido con ID:', docRef.id);
+    //console.log('✅ Documento añadido con ID:', docRef.id);
     return docRef.id;
     
   } catch (error) {
-    console.error('❌ Firebase Error in addMovieToFirestore:', error);
+    //console.error('❌ Firebase Error in addMovieToFirestore:', error);
     
     // Logging detallado del error
     if (error instanceof Error) {
-      console.error('Error name:', error.name);
-      console.error('Error message:', error.message);
-      console.error('Error stack:', error.stack);
+      //console.error('Error name:', error.name);
+      //console.error('Error message:', error.message);
+      //console.error('Error stack:', error.stack);
     }
     
     // Log específico para errores de Firebase
     if ((error as any).code) {
-      console.error('Firebase error code:', (error as any).code);
+      //console.error('Firebase error code:', (error as any).code);
     }
     
     throw error;
@@ -92,7 +92,7 @@ export const addMovieToFirestore = async (tmdbMovie: TMDBMovie): Promise<string>
 
 export const getMoviesFromFirestore = async (): Promise<Movie[]> => {
   try {
-    console.log('🔍 Firebase: Obteniendo películas...');
+    //console.log('🔍 Firebase: Obteniendo películas...');
     
     if (!db) {
       console.warn('⚠️ Database no inicializado, devolviendo array vacío');
@@ -108,12 +108,12 @@ export const getMoviesFromFirestore = async (): Promise<Movie[]> => {
       ...doc.data()
     })) as Movie[];
 
-    console.log('✅ Películas obtenidas:', movies.length);
-    console.log('📋 Películas ordenadas por número:', movies.map(m => `${m.orderNumber}: ${m.title}`));
+    //console.log('✅ Películas obtenidas:', movies.length);
+    //console.log('📋 Películas ordenadas por número:', movies.map(m => `${m.orderNumber}: ${m.title}`));
     
     return movies;
   } catch (error) {
-    console.error('❌ Firebase Error in getMoviesFromFirestore:', error);
+    //console.error('❌ Firebase Error in getMoviesFromFirestore:', error);
     
     // Si hay error de conexión, devolver array vacío en lugar de lanzar error
     if ((error as any).code === 'unavailable' || (error as any).code === 'deadline-exceeded') {
@@ -127,7 +127,7 @@ export const getMoviesFromFirestore = async (): Promise<Movie[]> => {
 
 export const updateMovieWatchStatus = async (movieId: string, watched: boolean): Promise<void> => {
   try {
-    console.log('🔄 Actualizando estado watched:', { movieId, watched });
+    //console.log('🔄 Actualizando estado watched:', { movieId, watched });
     
     if (!db) {
       throw new Error('Firebase database no está inicializado');
@@ -136,16 +136,16 @@ export const updateMovieWatchStatus = async (movieId: string, watched: boolean):
     const movieRef = doc(db, MOVIES_COLLECTION, movieId);
     await updateDoc(movieRef, { watched });
     
-    console.log('✅ Estado actualizado correctamente');
+    //console.log('✅ Estado actualizado correctamente');
   } catch (error) {
-    console.error('❌ Firebase Error in updateMovieWatchStatus:', error);
+    //console.error('❌ Firebase Error in updateMovieWatchStatus:', error);
     throw error;
   }
 };
 
 export const deleteMovieFromFirestore = async (movieId: string): Promise<void> => {
   try {
-    console.log('🗑️ Eliminando película:', movieId);
+    //console.log('🗑️ Eliminando película:', movieId);
     
     if (!db) {
       throw new Error('Firebase database no está inicializado');
@@ -153,9 +153,9 @@ export const deleteMovieFromFirestore = async (movieId: string): Promise<void> =
 
     await deleteDoc(doc(db, MOVIES_COLLECTION, movieId));
     
-    console.log('✅ Película eliminada correctamente');
+    //console.log('✅ Película eliminada correctamente');
   } catch (error) {
-    console.error('❌ Firebase Error in deleteMovieFromFirestore:', error);
+    //console.error('❌ Firebase Error in deleteMovieFromFirestore:', error);
     throw error;
   }
 };

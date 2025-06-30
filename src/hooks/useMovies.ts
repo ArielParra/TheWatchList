@@ -14,13 +14,13 @@ export const useMovies = () => {
 
   const loadMovies = async () => {
     try {
-      console.log('🔄 Cargando películas...');
+      //console.log('🔄 Cargando películas...');
       setLoading(true);
       const moviesData = await getMoviesFromFirestore();
-      console.log('📋 Películas cargadas:', moviesData.length);
+      //console.log('📋 Películas cargadas:', moviesData.length);
       setMovies(moviesData);
     } catch (error) {
-      console.error('❌ Error loading movies:', error);
+      //console.error('❌ Error loading movies:', error);
       Alert.alert(t('messages.error'), t('messages.errorLoading'));
     } finally {
       setLoading(false);
@@ -43,7 +43,7 @@ export const useMovies = () => {
       
       // No necesitamos recargar toda la lista, el estado ya está actualizado
     } catch (error) {
-      console.error('Error updating watch status:', error);
+      //console.error('Error updating watch status:', error);
       
       // Si hay error, revertir el cambio optimista
       setMovies(prevMovies => 

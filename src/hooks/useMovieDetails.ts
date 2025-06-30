@@ -29,7 +29,7 @@ export const useMovieDetails = () => {
 
       setDetailLoading(false);
     } catch (error) {
-      console.error('Error loading movie details:', error);
+      //console.error('Error loading movie details:', error);
       setDetailLoading(false);
       Alert.alert(t('messages.error'), 'Error loading movie details');
     }
@@ -55,7 +55,7 @@ export const useMovieDetails = () => {
           setWatchProviders(providers);
           setDetailLoading(false);
         } catch (error) {
-          console.error('Error reloading movie details:', error);
+          //console.error('Error reloading movie details:', error);
           setDetailLoading(false);
         }
       };

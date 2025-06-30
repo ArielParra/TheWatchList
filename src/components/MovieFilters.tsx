@@ -146,7 +146,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
     }
     if (filters.genre) {
       const translatedGenre = t(`genres.${filters.genre}`);
-      console.log(`Active filter genre debug: ${filters.genre} -> ${translatedGenre}`);
+      //console.log(`Active filter genre debug: ${filters.genre} -> ${translatedGenre}`);
       activeFilters.push(translatedGenre !== `genres.${filters.genre}` ? translatedGenre : filters.genre);
     }
     return activeFilters.length > 0 ? activeFilters.join(' • ') : t('filters.noFilters');
@@ -499,7 +499,7 @@ export const MovieFiltersComponent: React.FC<MovieFiltersComponentProps> = ({
             
             {genres.slice(0, 12).map(genre => {
               const translatedGenre = t(`genres.${genre.name}`);
-              console.log(`Genre debug: ${genre.name} -> ${translatedGenre}`);
+              //console.log(`Genre debug: ${genre.name} -> ${translatedGenre}`);
               return (
                 <SecondaryButton 
                   key={genre.id}
