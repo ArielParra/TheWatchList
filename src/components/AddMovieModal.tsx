@@ -117,9 +117,19 @@ export const AddMovieModal: React.FC<AddMovieModalProps> = ({
     >
       <ModalOverlay style={{ padding: 16 }}>
         <ModalContent style={{ maxHeight: '90%' }}>
-          <TopBarRow>
-            <TopBarTitle>{t('buttons.searchMovies')}</TopBarTitle>
-            <IconButton onPress={onClose}>
+          <TopBarRow style={{ 
+            flexDirection: 'row', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            width: '100%',
+            marginBottom: 16
+          }}>
+            <TopBarTitle style={{ flex: 1 }}>{t('buttons.searchMovies')}</TopBarTitle>
+            <IconButton onPress={onClose} style={{
+              marginLeft: 'auto',
+              backgroundColor: 'transparent',
+              borderWidth: 0
+            }}>
               <Ionicons name="close" size={24} color={colors.text} />
             </IconButton>
           </TopBarRow>
